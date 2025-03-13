@@ -18,7 +18,7 @@ namespace LMS.DB.Entities
         public DateTime UpdatedDate { get; set; }
         
         // Navigation property
-        public Address? Address { get; set; }
+        public Address? Address { get; set; } 
         public ICollection<OTP> OTP { get; set; }
     }
 }

@@ -7,5 +7,8 @@
         public string Description {  get; set; }
         public DateTime Duration { get; set; }
 
+        //navigation property
+        public ICollection<Subject> Subjects { get; set; } 
+
     }
 }

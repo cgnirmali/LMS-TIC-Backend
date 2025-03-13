@@ -11,5 +11,7 @@
         //navigation property
         public ICollection<Course> Course { get; set; }
         public ICollection<Assesment> Assesment { get; set; }
+        public ICollection<QuizExam> QuizExam { get; set; }
+
     }
 }
