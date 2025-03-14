@@ -1,5 +1,9 @@
 
 using LMS.DB;
+using LMS.Repositories.Implementation;
+using LMS.Repositories.Interfaces;
+using LMS.Services.Implementation;
+using LMS.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace LMS
@@ -20,7 +24,10 @@ namespace LMS
 
             // db configuration
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
-
+            builder.Services.AddScoped<ICourseRepository ,CourseRepository>();  
+            builder.Services.AddScoped<ICourseService ,CourseService>();
+            builder.Services.AddScoped<IBatchRepository ,BatchRepository>();
+            builder.Services.AddScoped<IBatchService ,BatchService>();
 
 
             // cors policy added
