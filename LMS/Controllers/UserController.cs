@@ -1,0 +1,45 @@
+﻿using LMS.DTOs.RequestModel;
+using LMS.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace LMS.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UserController : ControllerBase
+    {
+        private readonly IUserService _userService;
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
+        [HttpPost("send")]
+        public async Task<IActionResult> SendOtp(string email)
+        {
+            if (await _userService.SendOtpAsync(email))
+                return Ok(new { message = "OTP sent successfully." });
+
+            return BadRequest(new { message = "Failed to send OTP." });
+        }
+
+    
+        [HttpPost("CheckOTP")]
+        public async Task<IActionResult> CheckOTP(string otp)
+        {
+            var data = await _userService.CheckOTP(otp);
+            var json = new { message = "OTP verified Succesfully" };
+            return Ok(json);
+
+        }
+
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(string email, string password)
+        {
+            var data = await _userService.ChangePassword(email,password);
+            var json = new { message = "PasswordChanged" };
+            return Ok(json);
+        }
+    }
+}

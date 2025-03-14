@@ -1,6 +1,13 @@
 
 using LMS.DB;
+using LMS.DB.Entities.Email;
+using LMS.Repositories.Implementation;
+using LMS.Repositories.Interfaces;
+using LMS.Services.Implementation;
+using LMS.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace LMS
 {
@@ -20,6 +27,45 @@ namespace LMS
 
             // db configuration
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
+
+            // Register EmailConfig
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
+
+            // Register Email services
+            builder.Services.AddScoped<EmailService>();
+            //builder.Services.AddScoped<SendMailRepository>();
+            //builder.Services.AddScoped<EmailServiceProvider>();
+
+
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+
+
+            // JWT Authentication Configuration
+            //builder.Services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //.AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidateLifetime = true,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            //        ValidAudience = builder.Configuration["Jwt:Audience"],
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            //    };
+            //});
+
+
+            // Ensure EmailConfig is available as a singleton if needed
+            builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<EmailConfig>>().Value);
 
 
 

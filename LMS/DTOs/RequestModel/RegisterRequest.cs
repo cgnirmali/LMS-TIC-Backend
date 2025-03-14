@@ -1,9 +1,7 @@
 ﻿namespace LMS.DTOs.RequestModel
 {
-    public class StudentRequest
+    public class RegisterRequest
     {
-        
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public string NIC { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
