@@ -6,8 +6,10 @@ namespace LMS.DB.Entities
     {
         public Guid Id { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string Name { get; set; }
+       
         public string? Email { get; set; }
+        public bool IsEmailConfirmed { get; set; }
+
 
         public string? Password { get; set; }
 
@@ -15,10 +17,10 @@ namespace LMS.DB.Entities
 
         public bool IsVerified { get; set; }
 
-        public DateTime UpdatedDate { get; set; }
+        
         
         // Navigation property
-        public Address? Address { get; set; } 
+        
         public ICollection<OTP> OTP { get; set; }
     }
 }

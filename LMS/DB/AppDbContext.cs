@@ -20,7 +20,6 @@ namespace LMS.DB
         public DbSet<Lecturer> Lecturers { get; set; }
         public DbSet<Staff> Staffs { get; set; }
 
-        public DbSet<Address> Addresses { get; set; }
 
         //Course tables
 

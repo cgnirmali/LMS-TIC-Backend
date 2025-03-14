@@ -3,7 +3,7 @@
     public class Student
     {
         public Guid Id { get; set; }
-        //public Guid UserId { get; set; }
+        public Guid UserId { get; set; }
         public DateTime CreatedDate { get; set; }
         public string NIC { get; set; }
         public string FirstName { get; set; }
@@ -14,9 +14,13 @@
         public string UTNumber { get; set; }
         public string Gender { get; set; }
         public string ImageUrl { get; set; }
-        public bool IsVerify { get; set; }
+        public bool AdminVerify { get; set; }
+        public string Address { get; set; }
+
 
         //navigation property
+        public User User { get; set; }
+    
         public ICollection<AssesmentSubmission> Assesmentsubmission { get; set; }
         public ICollection<Attendance> Attendance { get; set; }
 
