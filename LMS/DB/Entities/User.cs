@@ -13,12 +13,13 @@ namespace LMS.DB.Entities
         public string Email { get; set; }
 
 
+
         public bool IsEmailConfirmed { get; set; }
 
 
         public string? Password { get; set; }
 
-        public Roll Roll { get; set; }
+        public Role role { get; set; }
 
         public bool IsVerified { get; set; }
 
