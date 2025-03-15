@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LMS.DTOs.RequestModel;
+using LMS.Repositories.Interfaces;
+using LMS.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LMS.Controllers
 {
@@ -7,5 +11,64 @@ namespace LMS.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
+        private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
+        IStudentRepository _studentRepository;
+        public StudentController(IUserService userService, IUserRepository userRepository,IStudentRepository studentRepository)
+        {
+            _userService = userService;
+            _userRepository = userRepository;
+            _studentRepository = studentRepository;
+
+        }
+
+        [HttpPost("register-new-student")]
+        public async Task<IActionResult> Register(RegisterRequest registerRequest)
+        {
+            try
+            {
+                var user = await _userRepository.GetUserByEmailAsync(registerRequest.Email);
+                if (user == null || user.IsEmailConfirmed == false) return BadRequest("Verify Your Email");
+
+                await _userService.Register(registerRequest);
+                return Ok("Student Registered Succesfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("Verify-student")]
+        public async Task<IActionResult> VerifyRegister(Guid id)
+        {
+            try
+            {
+                await _studentRepository.VerifyRegister(id);
+                return Ok("Student Registered By Admin");
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetStudent-By-Email")]
+        public async Task<IActionResult> GetUserByEmail(string email)
+        {
+            try
+            {
+                var data = await _studentRepository.GetStudentByEmail(email);
+                if (data == null) throw new Exception("Student Not found");
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
     }
 }

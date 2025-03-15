@@ -25,12 +25,28 @@ namespace LMS.Controllers
         }
 
     
-        [HttpPost("CheckOTP")]
-        public async Task<IActionResult> CheckOTP(string otp)
+        //[HttpPost("CheckOTP")]
+        //public async Task<IActionResult> CheckOTP(string otp)
+        //{
+        //    var data = await _userService.CheckOTP(otp);
+        //    var json = new { message = "OTP verified Succesfully" };
+        //    return Ok(json);
+
+        //}
+
+        [HttpPost("VerifyOtp")]
+        public async Task<IActionResult> EnterOTP(OtpVerifyDto otpVerifyDto )
         {
-            var data = await _userService.CheckOTP(otp);
-            var json = new { message = "OTP verified Succesfully" };
-            return Ok(json);
+            try
+            {
+                var data = await _userService.VerifyOtpAsync(otpVerifyDto);
+                return Ok(data);
+                    
+            }
+            catch(Exception ex)
+            { 
+                return BadRequest(new {ex.Message});
+            }
 
         }
 

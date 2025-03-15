@@ -24,7 +24,8 @@ namespace LMS.Repositories.Implementation
         }
         public async Task<User> GetUserByEmailAsync(string email)
         {
-            return await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
+           var data = await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
+            return data;
         }
 
 
@@ -46,6 +47,7 @@ namespace LMS.Repositories.Implementation
         {
             var check = await _context.OTPs.FirstOrDefaultAsync(x => x.Code == otp);
             if (check == null) throw new Exception("OTP Not Found");
+
             return check;
         }
 
@@ -66,6 +68,37 @@ namespace LMS.Repositories.Implementation
             return data;
         }
 
+        public async Task AddNewStudent(Student student) 
+        {
+        await _context.Students.AddAsync(student);
+        await _context.SaveChangesAsync();  
+        }
 
+        public async Task<User> GetUserById(Guid id)
+        {
+            return await _context.Users.FirstOrDefaultAsync( d => d.Id == id);
+        }
+
+        public async Task DeleteUser(Guid id)
+        { 
+            var data = await GetUserById(id);
+            _context.Users.Remove(data);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task updateUserIsEmailConfirmed(Guid id)
+        {
+            var data = await GetUserById(id);
+            data.IsEmailConfirmed = true;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<OTP> GetOtpByUserId(Guid id)
+        { 
+          var otp = await _context.OTPs.FirstOrDefaultAsync(d => d.UserId == id);
+            return otp;
+        }
+
+        
     }
 }

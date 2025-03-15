@@ -2,11 +2,12 @@
 using LMS.DB.Entities;
 using LMS.DTOs.RequestModel;
 using LMS.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Pqc.Crypto.Lms;
 
 namespace LMS.Repositories.Implementation
 {
-    public class StudentRepository 
+    public class StudentRepository : IStudentRepository
     {
         private readonly AppDbContext _context;
         private readonly IUserRepository _userRepository;
@@ -19,33 +20,29 @@ namespace LMS.Repositories.Implementation
 
         }
 
-        public async Task<string> Register(RegisterRequest request)
+        public async Task<Student> GetStudentByEmail(string email)
         {
-            var user = await _userRepository.GetUserByEmailAsync(request.Email);
-            if (request.Password == request.ConfirmPassword && user.IsEmailConfirmed == true)
-            {
-                var student = new Student
-                {
-                    CreatedDate = DateTime.Now,
-                    UserId = user.Id,
-                    NIC = request.NIC,
-                    PhoneNumber = request.PhoneNumber,
-                    FirstName = request.FirstName,
-                    LastName = request.LastName,
-                    Email = request.Email,
-                    Gender = request.Gender,
-                    ImageUrl = request.ImageUrl,
-                    UTNumber = request.UTNumber,
-                    AdminVerify = false,
+            var data = await _context.Students.SingleOrDefaultAsync(d => d.Email  == email);
+            if (data == null) throw new Exception("Student Not found");
+            return data;
+        }
 
-                };
+        public async Task<Student> GetStudentById(Guid id)
+        {
+            var data = await _context.Students.SingleOrDefaultAsync(d => d.Id == id);
+            if (data == null) throw new Exception("Student Not found");
+            return data;
+        }
 
-                await _userRepository.ChangePassword(user.Email,request.Password);
-                await _context.Students.AddAsync(student);
-                await _context.SaveChangesAsync();
+        public async Task VerifyRegister(Guid id)
+        { 
+        var data =await GetStudentById(id);
+            data.AdminVerify = true;    
+            await _context.SaveChangesAsync();
 
-            }
-            return "Student Registered successfully";
+            var sameUser = await _context.Users.FirstOrDefaultAsync(x => x.Id ==data.UserId);
+            sameUser.IsVerified = true;
+            await _context.SaveChangesAsync();
         }
     }
 }
