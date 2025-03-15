@@ -23,10 +23,18 @@ namespace LMS.DB
 
         //Course tables
 
-        public DbSet<Batch> Batchs { get; set; }
+        public DbSet<Batch> Batches { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Course>()
+        //        .HasOne(c => c.Batch)
+        //        .WithMany(b => b.Course)
+        //        .HasForeignKey(c => c.BatchId);
+        //}
 
         //Course assets tables
         public DbSet<Material> Materials { get; set; }
@@ -37,8 +45,10 @@ namespace LMS.DB
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<MarkingAttendence> MarkingAttences { get; set; }
-        
+
         //Quiz Exam
+
+
 
     }
 }
