@@ -1,5 +1,9 @@
 
 using LMS.DB;
+using LMS.Repositories.Implementation;
+using LMS.Repositories.Interfaces;
+using LMS.Services.Implementation;
+using LMS.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace LMS
@@ -20,6 +24,15 @@ namespace LMS
 
             // db configuration
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
+
+            builder.Services.AddScoped<IStaffRepository, StaffRepository>();
+            builder.Services.AddScoped<IStaffService, StaffService>();
+            builder.Services.AddScoped<EmailService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+
+
 
 
 
