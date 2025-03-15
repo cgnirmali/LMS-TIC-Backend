@@ -156,41 +156,8 @@ namespace LMS.Services.Implementation
             claimsList.Add(new Claim("Role", user.role.ToString()));
 
 
-            var key = _configuration["JWT:Key"];
-            var secKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key));
-            var credentials = new SigningCredentials(secKey, SecurityAlgorithms.HmacSha256);
 
 
-        private readonly IUserRepository _userRepository;
-        private readonly IConfiguration _configuration;
-        
-
-        public UserService (IUserRepository userRepository , IConfiguration configuration)
-        {
-            _userRepository = userRepository;
-            _configuration = configuration;
-        }
-
-
-        public async Task<string>  loginUser (string email, string password)
-        {
-            var data =await _userRepository.getElementByEmail(email);
-            if (data == null) throw new Exception("User not found.");
-            if (!BCrypt.Net.BCrypt.Verify(password, data.Password))
-                throw new Exception("Incorrect password.");
-
-            return CreateToken(data);
-
-
-        }
-
-        private string CreateToken(User data)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim("EmailUser", data.Email),
-                new Claim("Role", data.Roll.ToString())
-            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -209,6 +176,75 @@ namespace LMS.Services.Implementation
             };
             return response;
         }
+
+
+
+
+        //var key = _configuration["JWT:Key"];
+        //    var secKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key));
+        //    var credentials = new SigningCredentials(secKey, SecurityAlgorithms.HmacSha256);
+
+        //claims: claims,
+        //              expires: DateTime.Now.AddDays(30),
+        //              signingCredentials: credentials
+        //          );
+
+        //    return new JwtSecurityTokenHandler().WriteToken(token);
+        //}
+
+
+
+
+        //private readonly IUserRepository _userRepository;
+        //private readonly IConfiguration _configuration;
+
+
+        //public UserService (IUserRepository userRepository , IConfiguration configuration)
+        //{
+        //    _userRepository = userRepository;
+        //    _configuration = configuration;
+        //}
+
+
+        //public async Task<string>  loginUser (string email, string password)
+        //{
+        //    var data =await _userRepository.getElementByEmail(email);
+        //    if (data == null) throw new Exception("User not found.");
+        //    if (!BCrypt.Net.BCrypt.Verify(password, data.Password))
+        //        throw new Exception("Incorrect password.");
+
+        //    return CreateToken(data);
+
+
+        //}
+
+        //private string CreateToken(User data)
+        //{
+        //    var claims = new List<Claim>
+        //    {
+        //        new Claim("EmailUser", data.Email),
+        //        new Claim("Role", data.Roll.ToString())
+        //    };
+
+        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
+        //    var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        //    var token = new JwtSecurityToken(
+        //        issuer: _configuration["JWT:Issuer"],
+        //        audience: _configuration["JWT:Audience"],
+
+        //        claims: claimsList,
+        //        expires: DateTime.Now.AddDays(30),
+        //        signingCredentials: credentials
+        //        );
+        //    var response = new TokenModel
+        //    {
+        //        Token = new JwtSecurityTokenHandler().WriteToken(token)
+        //    };
+        //    return response;
+        //}
+
+
 
         public async Task<string> Register(RegisterRequest request)
         {
@@ -287,13 +323,7 @@ namespace LMS.Services.Implementation
 
         //    return "Verify Your Email";
         //}
-      claims: claims,
-                expires: DateTime.Now.AddDays(30),
-                signingCredentials: credentials
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+     
 
 
 

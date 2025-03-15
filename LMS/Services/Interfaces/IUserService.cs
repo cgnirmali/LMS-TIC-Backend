@@ -16,7 +16,7 @@ namespace LMS.Services.Interfaces
         Task<string> Register(RegisterRequest request);
         Task<bool> VerifyOtpAsync(OtpVerifyDto otpVerifyDto);
         TokenModel CreateToken(User user);
-         Task<string> loginUser(string email, string password);
+         //Task<string> loginUser(string email, string password);
 
         
 

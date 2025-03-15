@@ -27,10 +27,19 @@ namespace LMS.Services.Implementation
             _emailService = emailService;
         }
 
-        public async Task<string> AddStaff(StaffRequest staffRequest , UserStaff_LectureRequest userStaff_LectureRequest)
+        public async Task<string> AddStaff(StaffRequest staffRequest, UserStaff_LectureRequest userStaff_LectureRequest)
         {
             try
+
+
             {
+
+                Console.WriteLine($"Received Address: {staffRequest.Address}");
+
+                if (string.IsNullOrWhiteSpace(staffRequest.Address))
+                {
+                    throw new ArgumentException("Address cannot be null or empty");
+                }
 
                 if (string.IsNullOrEmpty(userStaff_LectureRequest.Email))
                 {
@@ -40,7 +49,7 @@ namespace LMS.Services.Implementation
                 string randomString = GenerateRandomString(6);
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(randomString);
 
-            
+
 
 
                 var user = new User
@@ -49,7 +58,7 @@ namespace LMS.Services.Implementation
 
                     Email = userStaff_LectureRequest.Email,
                     Password = hashedPassword,
-                    Roll = Assets.Enums.Roll.Staff,
+                    role = Assets.Enums.Role.Staff,
                     CreatedDate = DateTime.UtcNow
                 };
 
@@ -57,7 +66,7 @@ namespace LMS.Services.Implementation
 
                 await _staffRepository.AddStaffUser(user);
 
-                await _emailService.SendEmailAsync(
+                await _emailService.SendEmailtoLoginAsync(
                 user.Email,
                "Your Account Credentials",
                $"Your password: {randomString}"
@@ -78,7 +87,7 @@ namespace LMS.Services.Implementation
 
 
                 await _staffRepository.AddStaff(staff);
-                    return CreateToken(user);
+                return CreateToken(user);
 
 
             }
@@ -94,7 +103,7 @@ namespace LMS.Services.Implementation
 
 
 
-         public static string GenerateRandomString(int length)
+        public static string GenerateRandomString(int length)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
             Random random = new Random();
@@ -109,7 +118,7 @@ namespace LMS.Services.Implementation
             var claims = new List<Claim>
             {
                 new Claim("EmailUser", user.Email),
-                new Claim("Role", user.Roll.ToString())
+                new Claim("Role", user.role.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));

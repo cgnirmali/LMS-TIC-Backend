@@ -9,7 +9,7 @@ namespace LMS.Repositories.Interfaces
 
         Task<User> AddUserAsync(User user);
         Task<User> GetUserByEmailAsync(string email);
-        Task<User> GetUserByEmailForgotPassword(string email);
+        //Task<User> GetUserByEmailForgotPassword(string email);
         Task<OTP> SaveOTP(OTP oTP);
         Task<OTP> CheckOTPExits(string otp);
         Task<User> ChangePassword(string email, string password);
@@ -19,7 +19,7 @@ namespace LMS.Repositories.Interfaces
         Task<OTP> GetOtpByUserId(Guid id);
         Task updateUserIsEmailConfirmed(Guid id);
         Task DeleteUser(Guid id);
-        Task<User> getElementByEmail(string email);
+        //Task<User> getElementByEmail(string email);
 
     }
 }

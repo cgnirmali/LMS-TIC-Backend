@@ -36,12 +36,12 @@ namespace LMS.Repositories.Implementation
         }
 
 
-        public async Task<User> GetUserByEmailForgotPassword(string email)
-        {
-            var data = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            if (data == null) throw new Exception("User Not found");
-            return data;
-        }
+        //public async Task<User> GetUserByEmailForgotPassword(string email)
+        //{
+        //    var data = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        //    if (data == null) throw new Exception("User Not found");
+        //    return data;
+        //}
 
         public async Task<OTP> SaveOTP(OTP oTP)
         {
@@ -109,11 +109,11 @@ namespace LMS.Repositories.Implementation
         
 
 
-        public  async Task<User> getElementByEmail(string email)
-        {
-            return await _context.Users.SingleOrDefaultAsync(user => user.Email == email);
+        //public  async Task<User> getElementByEmail(string email)
+        //{
+        //    return await _context.Users.SingleOrDefaultAsync(user => user.Email == email);
 
-        }
+        //}
 
 
 
