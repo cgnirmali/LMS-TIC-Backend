@@ -1,4 +1,5 @@
 ﻿using LMS.Assets.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace LMS.DB.Entities
 {
@@ -6,8 +7,13 @@ namespace LMS.DB.Entities
     {
         public Guid Id { get; set; }
         public DateTime CreatedDate { get; set; }
-       
+
+
+        [Required]
         public string Email { get; set; }
+
+
+
         public bool IsEmailConfirmed { get; set; }
 
 

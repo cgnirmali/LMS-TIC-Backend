@@ -1,3 +1,4 @@
+
 ﻿using LMS.DTOs.RequestModel;
 using LMS.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +10,7 @@ namespace LMS.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+
         private readonly IUserService _userService;
         public UserController(IUserService userService)
         {
@@ -57,5 +59,27 @@ namespace LMS.Controllers
             var json = new { message = "PasswordChanged" };
             return Ok(json);
         }
+
+ 
+
+
+
+        [HttpGet("Login")]
+        public async Task<IActionResult> Login(string email , string password)
+        {
+            try
+            {
+                var token = await _userService.loginUser(email, password);
+                return Ok(new { status = "success", message = "Login successful", token });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { status = "error", message = ex.Message });
+            }
+        }
+
+
+
+
     }
 }

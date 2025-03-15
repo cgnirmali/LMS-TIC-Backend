@@ -1,6 +1,8 @@
 
 using LMS.DB;
+
 using LMS.DB.Entities.Email;
+
 using LMS.Repositories.Implementation;
 using LMS.Repositories.Interfaces;
 using LMS.Services.Implementation;
@@ -67,6 +69,17 @@ namespace LMS
 
             // Ensure EmailConfig is available as a singleton if needed
             builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<EmailConfig>>().Value);
+
+
+            builder.Services.AddScoped<IStaffRepository, StaffRepository>();
+            builder.Services.AddScoped<IStaffService, StaffService>();
+            builder.Services.AddScoped<EmailService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ICourseRepository ,CourseRepository>();  
+            builder.Services.AddScoped<ICourseService ,CourseService>();
+            builder.Services.AddScoped<IBatchRepository ,BatchRepository>();
+            builder.Services.AddScoped<IBatchService ,BatchService>();
 
 
 

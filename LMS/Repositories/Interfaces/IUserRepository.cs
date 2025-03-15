@@ -1,10 +1,12 @@
 ﻿using LMS.DB.Entities;
+
 using LMS.DTOs.RequestModel;
 
 namespace LMS.Repositories.Interfaces
 {
     public interface IUserRepository
     {
+
         Task<User> AddUserAsync(User user);
         Task<User> GetUserByEmailAsync(string email);
         Task<User> GetUserByEmailForgotPassword(string email);
@@ -17,9 +19,7 @@ namespace LMS.Repositories.Interfaces
         Task<OTP> GetOtpByUserId(Guid id);
         Task updateUserIsEmailConfirmed(Guid id);
         Task DeleteUser(Guid id);
-
-
-
+        Task<User> getElementByEmail(string email);
 
     }
 }

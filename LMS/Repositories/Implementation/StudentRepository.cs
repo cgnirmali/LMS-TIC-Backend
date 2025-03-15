@@ -9,6 +9,7 @@ namespace LMS.Repositories.Implementation
 {
     public class StudentRepository : IStudentRepository
     {
+
         private readonly AppDbContext _context;
         private readonly IUserRepository _userRepository;
 
@@ -44,5 +45,6 @@ namespace LMS.Repositories.Implementation
             sameUser.IsVerified = true;
             await _context.SaveChangesAsync();
         }
+
     }
 }

@@ -1,3 +1,4 @@
+
 ﻿using LMS.DB.Entities;
 using LMS.DTOs.RequestModel;
 using LMS.DTOs.ResponseModel;
@@ -14,7 +15,10 @@ namespace LMS.Services.Interfaces
         string GenerateOtp();
         Task<string> Register(RegisterRequest request);
         Task<bool> VerifyOtpAsync(OtpVerifyDto otpVerifyDto);
-
         TokenModel CreateToken(User user);
+         Task<string> loginUser(string email, string password);
+
+        
+
     }
 }
