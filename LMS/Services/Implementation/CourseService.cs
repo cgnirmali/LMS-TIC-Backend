@@ -4,6 +4,7 @@ using LMS.DTOs.ResponseModel;
 using LMS.Repositories.Interfaces;
 using LMS.Services.Interfaces;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace LMS.Services.Implementation
 {
@@ -42,7 +43,7 @@ namespace LMS.Services.Implementation
                 Id = course.Id,
                 CreatedDate = course.CreatedDate,
                 Name = course.Name,
-                BatchId = course.BatchId,
+                BatchId = course.BatchId,  // BatchId is already part of the Course entity
                 Batch = new BatchResponseDTO
                 {
                     Id = course.Batch.Id,
@@ -52,6 +53,7 @@ namespace LMS.Services.Implementation
             });
         }
 
+
         public async Task<CourseResponseDTO> CreateCourseAsync(CourseRequerstDTO request)
         {
             var course = new Course
@@ -59,27 +61,38 @@ namespace LMS.Services.Implementation
                 Id = Guid.NewGuid(),
                 CreatedDate = DateTime.UtcNow,
                 Name = request.Name,
-                BatchId = request.BatchId
+                BatchId = request.BatchId  // This should link the course to a batch
             };
 
-            await _courseRepository.AddAsync(course);
+            await _courseRepository.AddAsync(course); // Adding the course
+
+            // Now, load the course with the batch to include the Batch data in the response
+            var courseWithBatch = await _courseRepository.GetByIdAsync(course.Id);
 
             return new CourseResponseDTO
             {
-                Id = course.Id,
-                CreatedDate = course.CreatedDate,
-                Name = course.Name,
-                BatchId = course.BatchId
+                Id = courseWithBatch.Id,
+                CreatedDate = courseWithBatch.CreatedDate,
+                Name = courseWithBatch.Name,
+                BatchId = courseWithBatch.BatchId,
+                Batch = new BatchResponseDTO
+                {
+                    Id = courseWithBatch.Batch.Id,
+                    CreatedDate = courseWithBatch.Batch.CreatedDate,
+                    Name = courseWithBatch.Batch.Name
+                }
             };
         }
 
-        public async Task UpdateCourseAsync(Guid id, CourseRequerstDTO request)
+
+
+        public async Task UpdateCourseAsync(Guid id, string name )
         {
             var course = await _courseRepository.GetByIdAsync(id);
             if (course != null)
             {
-                course.Name = request.Name;
-                course.BatchId = request.BatchId;
+                course.Name = name;
+                
                 await _courseRepository.UpdateAsync(course);
             }
         }

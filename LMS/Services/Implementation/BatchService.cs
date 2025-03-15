@@ -23,13 +23,7 @@ namespace LMS.Services.Implementation
                 Id = batch.Id,
                 CreatedDate = batch.CreatedDate,
                 Name = batch.Name,
-                Courses = batch.Course.Select(course => new CourseResponseDTO
-                {
-                    Id = course.Id,
-                    CreatedDate = course.CreatedDate,
-                    Name = course.Name,
-                    BatchId = course.BatchId
-                }).ToList()
+               
             };
         }
 

@@ -28,13 +28,13 @@ namespace LMS.DB
         public DbSet<Course> Courses { get; set; }
         public DbSet<Subject> Subjects { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Course>()
-                .HasOne(c => c.Batch)
-                .WithMany(b => b.Course)
-                .HasForeignKey(c => c.BatchId);
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Course>()
+        //        .HasOne(c => c.Batch)
+        //        .WithMany(b => b.Course)
+        //        .HasForeignKey(c => c.BatchId);
+        //}
 
         //Course assets tables
         public DbSet<Material> Materials { get; set; }

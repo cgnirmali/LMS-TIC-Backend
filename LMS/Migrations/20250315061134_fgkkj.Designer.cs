@@ -4,6 +4,7 @@ using LMS.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250315061134_fgkkj")]
+    partial class fgkkj
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,9 +148,14 @@ namespace LMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BatchId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Courses");
                 });
@@ -487,7 +495,7 @@ namespace LMS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CourseId")
+                    b.Property<Guid>("AssesmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -502,8 +510,6 @@ namespace LMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
 
                     b.ToTable("Subjects");
                 });
@@ -601,6 +607,10 @@ namespace LMS.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LMS.DB.Entities.Subject", null)
+                        .WithMany("Course")
+                        .HasForeignKey("SubjectId");
+
                     b.Navigation("Batch");
                 });
 
@@ -681,17 +691,6 @@ namespace LMS.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("LMS.DB.Entities.Subject", b =>
-                {
-                    b.HasOne("LMS.DB.Entities.Course", "Course")
-                        .WithMany("Subject")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-                });
-
             modelBuilder.Entity("QuizExamSubject", b =>
                 {
                     b.HasOne("LMS.DB.Entities.QuizExam", null)
@@ -721,8 +720,6 @@ namespace LMS.Migrations
             modelBuilder.Entity("LMS.DB.Entities.Course", b =>
                 {
                     b.Navigation("Group");
-
-                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Student", b =>
@@ -735,6 +732,8 @@ namespace LMS.Migrations
             modelBuilder.Entity("LMS.DB.Entities.Subject", b =>
                 {
                     b.Navigation("Assesment");
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.User", b =>

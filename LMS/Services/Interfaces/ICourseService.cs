@@ -10,8 +10,9 @@ namespace LMS.Services.Interfaces
 
         Task<CourseResponseDTO> CreateCourseAsync(CourseRequerstDTO request);
 
-        Task UpdateCourseAsync(Guid id, CourseRequerstDTO request);
+        //Task UpdateCourseAsync(Guid id, CourseRequerstDTO request);
 
+        Task UpdateCourseAsync(Guid id, string name);
         Task DeleteCourseAsync(Guid id);
     }
         

@@ -43,9 +43,9 @@ namespace LMS.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCourse(Guid id, CourseRequerstDTO request)
+        public async Task<IActionResult> UpdateCourse(Guid id, string name)
         {
-            await _courseService.UpdateCourseAsync(id, request);
+            await _courseService.UpdateCourseAsync(id, name);
             return NoContent();
         }
 

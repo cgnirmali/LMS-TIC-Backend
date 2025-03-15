@@ -14,15 +14,20 @@ namespace LMS.Repositories.Implementation
             _context = appDbContext;
             
         }
-
         public async Task<Course> GetByIdAsync(Guid id)
         {
-            return await _context.Courses.FindAsync(id);
+            return await _context.Courses
+                                 .Include(c => c.Batch)  // Eagerly load the Batch data
+                                 .FirstOrDefaultAsync(c => c.Id == id);
         }
+
+
 
         public async Task<IEnumerable<Course>> GetAllAsync()
         {
-            return await _context.Courses.ToListAsync();
+            return await _context.Courses
+                                 .Include(c => c.Batch)  // Eagerly load the related Batch data
+                                 .ToListAsync();
         }
 
         public async Task AddAsync(Course course)
