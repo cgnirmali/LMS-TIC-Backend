@@ -428,7 +428,6 @@ namespace LMS.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("AdminVerify")
@@ -606,7 +605,7 @@ namespace LMS.Migrations
             modelBuilder.Entity("LMS.DB.Entities.Group", b =>
                 {
                     b.HasOne("LMS.DB.Entities.Course", "Course")
-                        .WithMany("Group")
+                        .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -683,7 +682,7 @@ namespace LMS.Migrations
             modelBuilder.Entity("LMS.DB.Entities.Subject", b =>
                 {
                     b.HasOne("LMS.DB.Entities.Course", "Course")
-                        .WithMany("Subject")
+                        .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -715,13 +714,6 @@ namespace LMS.Migrations
             modelBuilder.Entity("LMS.DB.Entities.Batch", b =>
                 {
                     b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("LMS.DB.Entities.Course", b =>
-                {
-                    b.Navigation("Group");
-
-                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Student", b =>

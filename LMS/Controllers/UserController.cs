@@ -64,19 +64,19 @@ namespace LMS.Controllers
 
 
 
-        [HttpGet("Login")]
-        public async Task<IActionResult> Login(string email , string password)
-        {
-            try
-            {
-                var token = await _userService.loginUser(email, password);
-                return Ok(new { status = "success", message = "Login successful", token });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { status = "error", message = ex.Message });
-            }
-        }
+        //[HttpGet("Login")]
+        //public async Task<IActionResult> Login(string email , string password)
+        //{
+        //    try
+        //    {
+        //        var token = await _userService.loginUser(email, password);
+        //        return Ok(new { status = "success", message = "Login successful", token });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(new { status = "error", message = ex.Message });
+        //    }
+        //}
 
 
 

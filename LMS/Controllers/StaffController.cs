@@ -17,12 +17,13 @@ namespace LMS.Controllers
         {
             _staffService = staffService;
         }
+
         [HttpPost("Add_Staff")]
         public async Task<IActionResult> AddStaff([FromBody] StaffRequest staffRequest, [FromQuery] UserStaff_LectureRequest userStaff_LectureRequest)
         {
             try
             {
-                string  token =  await _staffService.AddStaff(staffRequest, userStaff_LectureRequest);
+                string token = await _staffService.AddStaff(staffRequest, userStaff_LectureRequest);
                 return Ok(new
                 {
                     status = "success",
@@ -37,7 +38,7 @@ namespace LMS.Controllers
         }
 
 
-         
-       
+
+
     }
 }

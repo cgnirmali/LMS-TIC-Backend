@@ -28,7 +28,6 @@ namespace LMS.Repositories.Implementation
         public async Task AddStaff(Staff staff)
         {
             await _context.Staffs.AddAsync(staff);
-            ;
             await _context.SaveChangesAsync();
         }
 
