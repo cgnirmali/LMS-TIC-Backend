@@ -20,6 +20,7 @@ namespace LMS.Repositories.Interfaces
         Task updateUserIsEmailConfirmed(Guid id);
         Task DeleteUser(Guid id);
         //Task<User> getElementByEmail(string email);
+        Task<OTP> GetOtpByEmailAsync(string email);
 
     }
 }

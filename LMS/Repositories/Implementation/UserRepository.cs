@@ -106,7 +106,11 @@ namespace LMS.Repositories.Implementation
             return otp;
         }
 
-        
+        public async Task<OTP> GetOtpByEmailAsync(string email)
+        {
+            var otp = await _context.OTPs.FirstOrDefaultAsync(d => d.UserEmail == email);
+            return otp;
+        }
 
 
         //public  async Task<User> getElementByEmail(string email)

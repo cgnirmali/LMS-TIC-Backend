@@ -13,7 +13,7 @@ namespace LMS.Services.Interfaces
         Task<bool> ChangePassword(string email, string password);
         Task<bool> SendOtpAsync(string email);
         string GenerateOtp();
-        Task<string> Register(RegisterRequest request);
+        Task<Info> Register(RegisterRequest request);
         Task<bool> VerifyOtpAsync(OtpVerifyDto otpVerifyDto);
         TokenModel CreateToken(User user);
          //Task<string> loginUser(string email, string password);

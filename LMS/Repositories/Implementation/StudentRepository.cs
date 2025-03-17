@@ -2,6 +2,7 @@
 using LMS.DB.Entities;
 using LMS.DTOs.RequestModel;
 using LMS.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Pqc.Crypto.Lms;
 
@@ -23,9 +24,8 @@ namespace LMS.Repositories.Implementation
 
         public async Task<Student> GetStudentByEmail(string email)
         {
-            var data = await _context.Students.SingleOrDefaultAsync(d => d.Email  == email);
-            if (data == null) throw new Exception("Student Not found");
-            return data;
+            var student = await _context.Students.SingleOrDefaultAsync(d => d.Email == email);
+            return student;
         }
 
         public async Task<Student> GetStudentById(Guid id)
@@ -34,6 +34,14 @@ namespace LMS.Repositories.Implementation
             if (data == null) throw new Exception("Student Not found");
             return data;
         }
+
+        public async Task<ICollection<Student>> GetAllStudents()
+        {
+            var data = await _context.Students.ToListAsync();
+            return data;
+        }
+
+     
 
         public async Task VerifyRegister(Guid id)
         { 
