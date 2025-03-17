@@ -79,10 +79,13 @@ namespace LMS
             builder.Services.AddScoped<ICourseService ,CourseService>();
             builder.Services.AddScoped<IBatchRepository ,BatchRepository>();
             builder.Services.AddScoped<IBatchService ,BatchService>();
+            builder.Services.AddScoped<IGroupRepository , GroupRepository>();
+            builder.Services.AddScoped<IGroupService , GroupService>();
             builder.Services.AddScoped<ISubjectService, SubjectService>();
             builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
             builder.Services.AddScoped<ILecturerService, LecturerService>();
             builder.Services.AddScoped<ILecturerRepository, LecturerRepository>();
+
 
 
 
