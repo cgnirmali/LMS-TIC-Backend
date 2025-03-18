@@ -1,4 +1,5 @@
-﻿using LMS.DTOs.RequestModel;
+﻿using LMS.DB;
+using LMS.DTOs.RequestModel;
 using LMS.Repositories.Interfaces;
 using LMS.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -14,13 +15,18 @@ namespace LMS.Controllers
         private readonly IUserService _userService;
         private readonly IUserRepository _userRepository;
         IStudentRepository _studentRepository;
+        private readonly AppDbContext _appDbContext;
         IStudentService _studentService;
-        public StudentController(IUserService userService, IUserRepository userRepository,IStudentRepository studentRepository, IStudentService studentService)
-        {
+
+      
+        public StudentController(IUserService userService, IUserRepository userRepository,IStudentRepository studentRepository, IStudentService studentService,AppDbContext appDbContext
+         {
             _userService = userService;
             _userRepository = userRepository;
             _studentRepository = studentRepository;
+            _appDbContext = appDbContext;
             _studentService = studentService;
+    
         }
 
         [HttpPost("register-new-student")]
@@ -81,7 +87,20 @@ namespace LMS.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        [HttpGet("Get-All-Students")]
+        public async Task<IActionResult> GetAllStudents()
+        {
+            try
+            {
+                var data = await _appDbContext.Students.ToListAsync();
+                if (data == null) throw new Exception("Students Not found");
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
 
     }
