@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Numerics;
 
 
 namespace LMS.Services.Implementation
@@ -112,40 +113,64 @@ namespace LMS.Services.Implementation
             string otp = GenerateOtp();
             var today = DateTime.Now;
             var expirationTime = DateTime.UtcNow.AddMinutes(7);
-           
 
-            var user = new User();
-            user.Email = email;
-            user.Id = Guid.NewGuid();
-            user.Password = null;
-            user.IsVerified = false;
-            user.role = Role.Student;
-            user.CreatedDate = today;
+            // Check if the user already exists
+            var user = await _userRepository.GetUserByEmailAsync(email);
 
-            await _userRepository.AddUserAsync(user);
-
-            var mailrequest = new MailRequest();
-            mailrequest.User = user;
-            mailrequest.Type = EmailType.OTP;
-            mailrequest.Otp = otp;
-
-            var OTP = new OTP
+            if (user == null)
             {
+                // If user does not exist, create a new one
+                user = new User
+                {
+                    Email = email,
+                    Id = Guid.NewGuid(),
+                    Password = null,
+                    IsVerified = false,
+                    role = Role.Student,
+                    CreatedDate = today
+                };
 
+                await _userRepository.AddUserAsync(user);
+            }
+            else
+            {
+                // If user exists, check for existing OTP
+                var existingOtp = await _userRepository.GetOtpByEmailAsync(email);
+
+                if (existingOtp != null && !user.IsEmailConfirmed)
+                {
+                    // Remove old OTP if not verified
+                    await _userRepository.RemoveOTP(existingOtp.Code);
+
+                }
+            }
+
+            // Generate new OTP and save it
+            var otpEntity = new OTP
+            {
                 UserEmail = email,
                 Code = otp,
                 CreatedDate = today,
                 EndTime = expirationTime,
                 User = user,
                 OtpType = OtpType.Registration
-
-
             };
 
-            await _userRepository.SaveOTP(OTP);
-            await _sendMailService.SendEmail(mailrequest);
+            await _userRepository.SaveOTP(otpEntity);
+
+            // Send email
+            var mailRequest = new MailRequest
+            {
+                User = user,
+                Type = EmailType.OTP,
+                Otp = otp
+            };
+
+            await _sendMailService.SendEmail(mailRequest);
+
             return true;
         }
+
 
         public TokenModel CreateToken(User user)
         {
@@ -218,84 +243,15 @@ namespace LMS.Services.Implementation
 
         //}
 
-        //private string CreateToken(User data)
-        //{
-        //    var claims = new List<Claim>
-        //    {
-        //        new Claim("EmailUser", data.Email),
-        //        new Claim("Role", data.Roll.ToString())
-        //    };
-
-        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
-        //    var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        //    var token = new JwtSecurityToken(
-        //        issuer: _configuration["JWT:Issuer"],
-        //        audience: _configuration["JWT:Audience"],
-
-        //        claims: claimsList,
-        //        expires: DateTime.Now.AddDays(30),
-        //        signingCredentials: credentials
-        //        );
-        //    var response = new TokenModel
-        //    {
-        //        Token = new JwtSecurityTokenHandler().WriteToken(token)
-        //    };
-        //    return response;
-        //}
 
 
 
-        public async Task<string> Register(RegisterRequest request)
-        {
-
-            var user = await _userRepository.GetUserByEmailAsync(request.Email);
-            //var existstudent = await _studentRepository.GetStudentByEmail(user.Email);
-            if (request.Password == request.ConfirmPassword && user.IsEmailConfirmed == true)
-            {
-                var student = new Student
-                {
-                    CreatedDate = DateTime.Now,
-                    UserId = user.Id,
-                    NIC = request.NIC,
-                    PhoneNumber = request.PhoneNumber,
-                    FirstName = request.FirstName,
-                    LastName = request.LastName,
-                    Email = request.Email,
-                    Gender = request.Gender,
-                    ImageUrl = request.ImageUrl,
-                    UTNumber = request.UTNumber,
-                    AdminVerify = true,
-                    Address = request.Address
-
-                };
-
-                await _userRepository.ChangePassword(user.Email, BCrypt.Net.BCrypt.HashPassword(request.Password));
-                await _userRepository.AddNewStudent(student);
-                await _context.SaveChangesAsync();
-
-                return "Student Registered successfully";
-            }
-            return "Verify Your Email";
-
-        }
 
         //public async Task<string> Register(RegisterRequest request)
         //{
+
         //    var user = await _userRepository.GetUserByEmailAsync(request.Email);
-
-        //    if (user == null)
-        //    {
-        //        return "User not found";
-        //    }
-
-        //    var existstudent = await _studentRepository.GetStudentByEmail(user.Email);
-
-        //    if (existstudent != null)
-        //    {
-        //        return "Student already exists";
-        //    }
-
+        //    //var existstudent = await _studentRepository.GetStudentByEmail(user.Email);
         //    if (request.Password == request.ConfirmPassword && user.IsEmailConfirmed == true)
         //    {
         //        var student = new Student
@@ -312,6 +268,7 @@ namespace LMS.Services.Implementation
         //            UTNumber = request.UTNumber,
         //            AdminVerify = true,
         //            Address = request.Address
+
         //        };
 
         //        await _userRepository.ChangePassword(user.Email, BCrypt.Net.BCrypt.HashPassword(request.Password));
@@ -320,10 +277,87 @@ namespace LMS.Services.Implementation
 
         //        return "Student Registered successfully";
         //    }
-
         //    return "Verify Your Email";
+
         //}
-     
+
+        public async Task<Info> Register(RegisterRequest request)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(request.Email);
+
+            if (user == null)
+            {
+                var info4 = new Info
+                {
+                    text = "User No"
+                };
+
+                return info4;
+            }
+
+            if (!user.IsEmailConfirmed)
+            {
+                var info3 = new Info
+                {
+                    text = "Please verify your email before registering as a student"
+                };
+
+                return info3;
+            }
+
+            var existstudent = await _studentRepository.GetStudentByEmail(user.Email);
+            if (existstudent != null)
+            {
+                var info2 = new Info
+                {
+                    text = "Student already exists"
+                };
+
+                return info2;
+            }
+
+            if (request.Password != request.ConfirmPassword)
+            {
+                var info1 = new Info
+                {
+                    text = "Password and Confirm Password do not match"
+                };
+
+                return info1;
+            }
+
+            var student = new Student
+            {
+                CreatedDate = DateTime.Now,
+                UserId = user.Id,
+                NIC = request.NIC,
+                PhoneNumber = request.PhoneNumber,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                Gender = request.Gender,
+                ImageUrl = request.ImageUrl,
+                UTNumber = request.UTNumber,
+                AdminVerify = true,
+                Address = request.Address
+            };
+
+            // Change Password
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
+            await _userRepository.ChangePassword(user.Email, hashedPassword);
+
+            // Add Student
+            await _userRepository.AddNewStudent(student);
+
+            var info = new Info
+            {
+                text = "Student Registered successfully"
+            };
+
+            return info;
+        }
+
+
 
 
 

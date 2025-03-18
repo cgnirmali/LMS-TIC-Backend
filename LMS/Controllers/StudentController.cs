@@ -16,13 +16,17 @@ namespace LMS.Controllers
         private readonly IUserRepository _userRepository;
         IStudentRepository _studentRepository;
         private readonly AppDbContext _appDbContext;
-        public StudentController(IUserService userService, IUserRepository userRepository,IStudentRepository studentRepository,AppDbContext appDbContext)
-        {
+        IStudentService _studentService;
+
+      
+        public StudentController(IUserService userService, IUserRepository userRepository,IStudentRepository studentRepository, IStudentService studentService,AppDbContext appDbContext
+         {
             _userService = userService;
             _userRepository = userRepository;
             _studentRepository = studentRepository;
             _appDbContext = appDbContext;
-
+            _studentService = studentService;
+    
         }
 
         [HttpPost("register-new-student")]
@@ -57,12 +61,25 @@ namespace LMS.Controllers
         }
 
         [HttpGet("GetStudent-By-Email")]
-        public async Task<IActionResult> GetUserByEmail(string email)
+        public async Task<IActionResult> GetStudentByEmail(string email)
         {
             try
             {
                 var data = await _studentRepository.GetStudentByEmail(email);
-                if (data == null) throw new Exception("Student Not found");
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("Get-All-Students")]
+        public async Task<IActionResult> GetAllStudents()
+        {
+            try
+            {
+                var data = await _studentRepository.GetAllStudents(); 
                 return Ok(data);
             }
             catch (Exception ex)
