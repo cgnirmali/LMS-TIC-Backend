@@ -17,6 +17,16 @@ namespace LMS.DB
 
         //users tables
         public DbSet<Student> Students { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Student>()
+     .HasOne(s => s.User)
+     .WithMany()
+     .HasForeignKey(s => s.UserId)
+     .OnDelete(DeleteBehavior.Cascade);
+
+        }
+
         public DbSet<Lecturer> Lecturers { get; set; }
         public DbSet<Staff> Staffs { get; set; }
 
@@ -28,13 +38,7 @@ namespace LMS.DB
         public DbSet<Course> Courses { get; set; }
         public DbSet<Subject> Subjects { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Course>()
-        //        .HasOne(c => c.Batch)
-        //        .WithMany(b => b.Course)
-        //        .HasForeignKey(c => c.BatchId);
-        //}
+        
 
         //Course assets tables
         public DbSet<Material> Materials { get; set; }

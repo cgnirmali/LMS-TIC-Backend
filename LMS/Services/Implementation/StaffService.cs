@@ -56,7 +56,7 @@ namespace LMS.Services.Implementation
                 {
                     Id = Guid.NewGuid(),
 
-                    Email = userStaff_LectureRequest.Email,
+                    UTEmail = userStaff_LectureRequest.Email,
                     Password = hashedPassword,
                     role = Assets.Enums.Role.Staff,
                     CreatedDate = DateTime.UtcNow
@@ -67,7 +67,7 @@ namespace LMS.Services.Implementation
                 await _staffRepository.AddStaffUser(user);
 
                 await _emailService.SendEmailtoLoginAsync(
-                user.Email,
+                user.UTEmail,
                "Your Account Credentials",
                $"Your password: {randomString}"
                 );
@@ -117,7 +117,7 @@ namespace LMS.Services.Implementation
         {
             var claims = new List<Claim>
             {
-                new Claim("EmailUser", user.Email),
+                new Claim("EmailUser", user.UTEmail),
                 new Claim("Role", user.role.ToString())
             };
 
