@@ -63,7 +63,10 @@ namespace LMS.Services.Implementation
                     
                 };
                 await _sendMailService.SendEmail(mailRequest);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9afbbf3d1f557d1ea051d4ca3fcd4eab7a533dbb
                 return new Info { text = "Student Added Sucessfully " };
             }
 
