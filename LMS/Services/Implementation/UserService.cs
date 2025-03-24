@@ -50,12 +50,10 @@ namespace LMS.Services.Implementation
             {
                 throw new Exception("User Not Found");
             }
-
-<<<<<<< HEAD
             // bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Passssword);
-=======
+
            // bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
->>>>>>> 9afbbf3d1f557d1ea051d4ca3fcd4eab7a533dbb
+
 
             if (user.Password != password)
                 throw new Exception("Password Not Match");
