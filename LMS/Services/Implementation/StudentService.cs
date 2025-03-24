@@ -13,13 +13,14 @@ namespace LMS.Services.Implementation
     {
     private readonly IStudentRepository _studentRepository;
         private readonly IUserRepository _userRepository ;
+        private readonly EmailService _sendMailService;
 
 
-        public StudentService(IStudentRepository studentRepository,IUserRepository userRepository)
+        public StudentService(IStudentRepository studentRepository,IUserRepository userRepository, EmailService sendMailService)
         {
             _studentRepository = studentRepository;
             _userRepository = userRepository;
-            
+            _sendMailService = sendMailService; 
         }
 
         public async Task<Info>AddNewStudent(StudentRequest studentRequest)
@@ -61,6 +62,7 @@ namespace LMS.Services.Implementation
                     Student = student,
                     
                 };
+                await _sendMailService.SendEmail(mailRequest);
 
                 return new Info { text = "Student Added Sucessfully " };
             }

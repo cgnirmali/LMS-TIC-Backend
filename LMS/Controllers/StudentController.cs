@@ -47,7 +47,7 @@ namespace LMS.Controllers
 
 
         [HttpPut("Update-Student/{studentId}")]
-        public async Task<IActionResult> UpdateStudent(Guid studentId, [FromBody] StudentRequest request)
+        public async Task<IActionResult> UpdateStudent(Guid studentId, [FromBody] UpdateStudentDto request)
         {
             if (request == null)
             {
