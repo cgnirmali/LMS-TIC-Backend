@@ -48,7 +48,7 @@ namespace LMS.DB
         //Time Table
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
-        public DbSet<MarkingAttendence> MarkingAttences { get; set; }
+       
 
         //Quiz Exam
 
