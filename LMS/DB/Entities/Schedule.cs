@@ -1,16 +1,20 @@
-﻿namespace LMS.DB.Entities
+﻿using LMS.Assets.Enums;
+using System.ComponentModel.DataAnnotations;
+
+namespace LMS.DB.Entities
 {
     public class Schedule
     {
-        public Guid Id { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
-        public string Title { get; set; }
 
-        public Guid LecturerId { get; set; }
+        [Key]
+        public Guid ScheduleId { get; set; }
+        public DateTime Date { get; set; }
 
-        //navigation property
-        public Lecturer Lecturer { get; set; }
+        public ClassSchedule ClassSchedule { get; set; }
+
+
+        public Holiday Holiday { get; set; }
+
+        public ScheduleDetail ScheduleDetail { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250315173500_dvc")]
-    partial class dvc
+    [Migration("20250330184628_dcq")]
+    partial class dcq
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,20 +94,25 @@ namespace LMS.Migrations
 
             modelBuilder.Entity("LMS.DB.Entities.Attendance", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("AttendanceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("AttendanceStatus")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("StudentId")
+                    b.Property<Guid>("FingerReaderID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
+                    b.Property<Guid>("FingerReaderTableFingerReaderID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.Property<Guid?>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AttendanceId");
+
+                    b.HasIndex("FingerReaderTableFingerReaderID");
 
                     b.HasIndex("StudentId");
 
@@ -155,6 +160,32 @@ namespace LMS.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("LMS.DB.Entities.FingerReaderTable", b =>
+                {
+                    b.Property<Guid>("FingerReaderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UTNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FingerReaderID");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("FingerReaderTable");
+                });
+
             modelBuilder.Entity("LMS.DB.Entities.Group", b =>
                 {
                     b.Property<Guid>("Id")
@@ -178,6 +209,27 @@ namespace LMS.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("LMS.DB.Entities.Holiday", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ScheduleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("holiday")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScheduleId")
+                        .IsUnique();
+
+                    b.ToTable("Holiday");
+                });
+
             modelBuilder.Entity("LMS.DB.Entities.Lecturer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -192,10 +244,6 @@ namespace LMS.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -219,26 +267,6 @@ namespace LMS.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Lecturers");
-                });
-
-            modelBuilder.Entity("LMS.DB.Entities.MarkingAttendence", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AttendanceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("AttendanceStatus")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AttendanceId")
-                        .IsUnique();
-
-                    b.ToTable("MarkingAttences");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Material", b =>
@@ -359,31 +387,50 @@ namespace LMS.Migrations
 
             modelBuilder.Entity("LMS.DB.Entities.Schedule", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ScheduleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<int>("ClassSchedule")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("LecturerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LecturerId");
+                    b.HasKey("ScheduleId");
 
                     b.ToTable("Schedules");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.ScheduleDetail", b =>
+                {
+                    b.Property<Guid>("ScheduleDetailsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan?>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ScheduleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeSpan?>("StartTime")
+                        .HasColumnType("time");
+
+                    b.HasKey("ScheduleDetailsId");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("ScheduleId")
+                        .IsUnique();
+
+                    b.ToTable("ScheduleDetail");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Staff", b =>
@@ -433,25 +480,14 @@ namespace LMS.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("AdminVerify")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -471,8 +507,15 @@ namespace LMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -517,17 +560,11 @@ namespace LMS.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
+                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsEmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsVerified")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Password")
+                    b.Property<string>("UTEmail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("role")
@@ -585,13 +622,17 @@ namespace LMS.Migrations
 
             modelBuilder.Entity("LMS.DB.Entities.Attendance", b =>
                 {
-                    b.HasOne("LMS.DB.Entities.Student", "Student")
-                        .WithMany("Attendance")
-                        .HasForeignKey("StudentId")
+                    b.HasOne("LMS.DB.Entities.FingerReaderTable", "FingerReaderTable")
+                        .WithMany()
+                        .HasForeignKey("FingerReaderTableFingerReaderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Student");
+                    b.HasOne("LMS.DB.Entities.Student", null)
+                        .WithMany("Attendance")
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("FingerReaderTable");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Course", b =>
@@ -605,15 +646,37 @@ namespace LMS.Migrations
                     b.Navigation("Batch");
                 });
 
+            modelBuilder.Entity("LMS.DB.Entities.FingerReaderTable", b =>
+                {
+                    b.HasOne("LMS.DB.Entities.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("LMS.DB.Entities.Group", b =>
                 {
                     b.HasOne("LMS.DB.Entities.Course", "Course")
-                        .WithMany()
+                        .WithMany("Group")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.Holiday", b =>
+                {
+                    b.HasOne("LMS.DB.Entities.Schedule", "Schedule")
+                        .WithOne("Holiday")
+                        .HasForeignKey("LMS.DB.Entities.Holiday", "ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Lecturer", b =>
@@ -627,17 +690,6 @@ namespace LMS.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("LMS.DB.Entities.MarkingAttendence", b =>
-                {
-                    b.HasOne("LMS.DB.Entities.Attendance", "Attendance")
-                        .WithOne("MarkingAttendence")
-                        .HasForeignKey("LMS.DB.Entities.MarkingAttendence", "AttendanceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Attendance");
-                });
-
             modelBuilder.Entity("LMS.DB.Entities.OTP", b =>
                 {
                     b.HasOne("LMS.DB.Entities.User", "User")
@@ -649,15 +701,23 @@ namespace LMS.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("LMS.DB.Entities.Schedule", b =>
+            modelBuilder.Entity("LMS.DB.Entities.ScheduleDetail", b =>
                 {
-                    b.HasOne("LMS.DB.Entities.Lecturer", "Lecturer")
+                    b.HasOne("LMS.DB.Entities.Group", "Group")
                         .WithMany()
-                        .HasForeignKey("LecturerId")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Lecturer");
+                    b.HasOne("LMS.DB.Entities.Schedule", "Schedule")
+                        .WithOne("ScheduleDetail")
+                        .HasForeignKey("LMS.DB.Entities.ScheduleDetail", "ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Staff", b =>
@@ -685,7 +745,7 @@ namespace LMS.Migrations
             modelBuilder.Entity("LMS.DB.Entities.Subject", b =>
                 {
                     b.HasOne("LMS.DB.Entities.Course", "Course")
-                        .WithMany()
+                        .WithMany("Subject")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -708,15 +768,25 @@ namespace LMS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LMS.DB.Entities.Attendance", b =>
-                {
-                    b.Navigation("MarkingAttendence")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("LMS.DB.Entities.Batch", b =>
                 {
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.Course", b =>
+                {
+                    b.Navigation("Group");
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.Schedule", b =>
+                {
+                    b.Navigation("Holiday")
+                        .IsRequired();
+
+                    b.Navigation("ScheduleDetail")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Student", b =>

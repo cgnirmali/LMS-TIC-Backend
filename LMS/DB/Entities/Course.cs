@@ -10,8 +10,8 @@
         
         // Navigation property
         public Batch Batch { get; set; }
-        //public ICollection<Group> Group {  get; set; }
-        //public ICollection<Subject> Subject { get; set; }
+        public ICollection<Group> Group {  get; set; }
+        public ICollection<Subject> Subject { get; set; }
         
 
     }
