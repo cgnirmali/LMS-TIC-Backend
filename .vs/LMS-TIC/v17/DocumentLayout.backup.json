@@ -1,0 +1,568 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250316101622_jgfds.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS\\Migrations\\20250316101622_jgfds.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\db\\entities\\subject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\db\\entities\\subject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\db\\entities\\assesment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\db\\entities\\assesment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\services\\interfaces\\isubjectservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\services\\interfaces\\isubjectservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\services\\implementation\\subjectservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\services\\implementation\\subjectservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\repositories\\interfaces\\isubjectrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\repositories\\interfaces\\isubjectrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\repositories\\implementation\\subjectrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\repositories\\implementation\\subjectrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\controllers\\subjectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\controllers\\subjectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250316100006_kjhvrv.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS\\Migrations\\20250316100006_kjhvrv.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\dtos\\requestmodel\\subjectrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\dtos\\requestmodel\\subjectrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\dtos\\responsemodel\\subjectresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\dtos\\responsemodel\\subjectresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250316090713_njegrj.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS\\Migrations\\20250316090713_njegrj.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\services\\implementation\\lecturerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\services\\implementation\\lecturerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\db\\entities\\lecturer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\db\\entities\\lecturer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\repositories\\implementation\\lecturerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\repositories\\implementation\\lecturerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\controllers\\lecturercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\controllers\\lecturercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\services\\implementation\\staffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\services\\implementation\\staffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\repositories\\implementation\\staffrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\repositories\\implementation\\staffrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\controllers\\staffcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\controllers\\staffcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\services\\interfaces\\ilecturerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\services\\interfaces\\ilecturerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\dtos\\requestmodel\\otpverifydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\dtos\\requestmodel\\otpverifydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250316075645_fjchd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS\\Migrations\\20250316075645_fjchd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\repositories\\interfaces\\ilecturerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\repositories\\interfaces\\ilecturerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\dtos\\requestmodel\\lecturerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\dtos\\requestmodel\\lecturerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\dtos\\responsemodel\\lecturerresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\dtos\\responsemodel\\lecturerresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\services\\interfaces\\istaffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\services\\interfaces\\istaffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\repositories\\interfaces\\istaffrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\repositories\\interfaces\\istaffrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\dtos\\responsemodel\\staffresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\dtos\\responsemodel\\staffresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|c:\\users\\user\\desktop\\staff and lect backend\\lms-tic-backend\\lms\\dtos\\responsemodel\\studentresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACB63C1-024A-4F1A-BF01-AD2AEA0A148D}|LMS\\LMS.csproj|solutionrelative:lms\\dtos\\responsemodel\\studentresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250315185851_tic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS\\Migrations\\20250315185851_tic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 100,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20250316101622_jgfds.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250316101622_jgfds.cs",
+              "RelativeDocumentMoniker": "LMS\\Migrations\\20250316101622_jgfds.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250316101622_jgfds.cs",
+              "RelativeToolTip": "LMS\\Migrations\\20250316101622_jgfds.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T10:16:22.316Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Subject.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DB\\Entities\\Subject.cs",
+              "RelativeDocumentMoniker": "LMS\\DB\\Entities\\Subject.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DB\\Entities\\Subject.cs",
+              "RelativeToolTip": "LMS\\DB\\Entities\\Subject.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAYwAwAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T10:03:55.37Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "20250316100006_kjhvrv.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250316100006_kjhvrv.cs",
+              "RelativeDocumentMoniker": "LMS\\Migrations\\20250316100006_kjhvrv.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250316100006_kjhvrv.cs",
+              "RelativeToolTip": "LMS\\Migrations\\20250316100006_kjhvrv.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T10:00:07.077Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Assesment.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DB\\Entities\\Assesment.cs",
+              "RelativeDocumentMoniker": "LMS\\DB\\Entities\\Assesment.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DB\\Entities\\Assesment.cs",
+              "RelativeToolTip": "LMS\\DB\\Entities\\Assesment.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T09:36:35.982Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ISubjectService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Services\\Interfaces\\ISubjectService.cs",
+              "RelativeDocumentMoniker": "LMS\\Services\\Interfaces\\ISubjectService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Services\\Interfaces\\ISubjectService.cs",
+              "RelativeToolTip": "LMS\\Services\\Interfaces\\ISubjectService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T09:36:03.349Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SubjectService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Services\\Implementation\\SubjectService.cs",
+              "RelativeDocumentMoniker": "LMS\\Services\\Implementation\\SubjectService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Services\\Implementation\\SubjectService.cs",
+              "RelativeToolTip": "LMS\\Services\\Implementation\\SubjectService.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAqwFoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T09:35:44.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ISubjectRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Repositories\\Interfaces\\ISubjectRepository.cs",
+              "RelativeDocumentMoniker": "LMS\\Repositories\\Interfaces\\ISubjectRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Repositories\\Interfaces\\ISubjectRepository.cs",
+              "RelativeToolTip": "LMS\\Repositories\\Interfaces\\ISubjectRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T09:31:02.198Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SubjectRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Repositories\\Implementation\\SubjectRepository.cs",
+              "RelativeDocumentMoniker": "LMS\\Repositories\\Implementation\\SubjectRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Repositories\\Implementation\\SubjectRepository.cs",
+              "RelativeToolTip": "LMS\\Repositories\\Implementation\\SubjectRepository.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAqwDUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T09:30:19.28Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "SubjectResponse.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\ResponseModel\\SubjectResponse.cs",
+              "RelativeDocumentMoniker": "LMS\\DTOs\\ResponseModel\\SubjectResponse.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\ResponseModel\\SubjectResponse.cs",
+              "RelativeToolTip": "LMS\\DTOs\\ResponseModel\\SubjectResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T09:29:49.72Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "SubjectRequest.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\RequestModel\\SubjectRequest.cs",
+              "RelativeDocumentMoniker": "LMS\\DTOs\\RequestModel\\SubjectRequest.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\RequestModel\\SubjectRequest.cs",
+              "RelativeToolTip": "LMS\\DTOs\\RequestModel\\SubjectRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T09:29:08.108Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SubjectController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Controllers\\SubjectController.cs",
+              "RelativeDocumentMoniker": "LMS\\Controllers\\SubjectController.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Controllers\\SubjectController.cs",
+              "RelativeToolTip": "LMS\\Controllers\\SubjectController.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAqwDwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T09:28:27.921Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "20250316090713_njegrj.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250316090713_njegrj.cs",
+              "RelativeDocumentMoniker": "LMS\\Migrations\\20250316090713_njegrj.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250316090713_njegrj.cs",
+              "RelativeToolTip": "LMS\\Migrations\\20250316090713_njegrj.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T09:07:13.662Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "20250316075645_fjchd.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250316075645_fjchd.cs",
+              "RelativeDocumentMoniker": "LMS\\Migrations\\20250316075645_fjchd.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250316075645_fjchd.cs",
+              "RelativeToolTip": "LMS\\Migrations\\20250316075645_fjchd.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T07:56:45.16Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Lecturer.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DB\\Entities\\Lecturer.cs",
+              "RelativeDocumentMoniker": "LMS\\DB\\Entities\\Lecturer.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DB\\Entities\\Lecturer.cs",
+              "RelativeToolTip": "LMS\\DB\\Entities\\Lecturer.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAywB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T07:54:41.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "OtpVerifyDto.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\RequestModel\\OtpVerifyDto.cs",
+              "RelativeDocumentMoniker": "LMS\\DTOs\\RequestModel\\OtpVerifyDto.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\RequestModel\\OtpVerifyDto.cs",
+              "RelativeToolTip": "LMS\\DTOs\\RequestModel\\OtpVerifyDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T07:11:04.399Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Program.cs",
+              "RelativeDocumentMoniker": "LMS\\Program.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Program.cs",
+              "RelativeToolTip": "LMS\\Program.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAUwFUAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:53:53.901Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ILecturerService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Services\\Interfaces\\ILecturerService.cs",
+              "RelativeDocumentMoniker": "LMS\\Services\\Interfaces\\ILecturerService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Services\\Interfaces\\ILecturerService.cs",
+              "RelativeToolTip": "LMS\\Services\\Interfaces\\ILecturerService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:53:49.008Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LecturerService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Services\\Implementation\\LecturerService.cs",
+              "RelativeDocumentMoniker": "LMS\\Services\\Implementation\\LecturerService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Services\\Implementation\\LecturerService.cs",
+              "RelativeToolTip": "LMS\\Services\\Implementation\\LecturerService.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAUwC4AAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:53:12.566Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ILecturerRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Repositories\\Interfaces\\ILecturerRepository.cs",
+              "RelativeDocumentMoniker": "LMS\\Repositories\\Interfaces\\ILecturerRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Repositories\\Interfaces\\ILecturerRepository.cs",
+              "RelativeToolTip": "LMS\\Repositories\\Interfaces\\ILecturerRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:52:52.315Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "LecturerRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Repositories\\Implementation\\LecturerRepository.cs",
+              "RelativeDocumentMoniker": "LMS\\Repositories\\Implementation\\LecturerRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Repositories\\Implementation\\LecturerRepository.cs",
+              "RelativeToolTip": "LMS\\Repositories\\Implementation\\LecturerRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:52:25.333Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "LecturerResponse.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\ResponseModel\\LecturerResponse.cs",
+              "RelativeDocumentMoniker": "LMS\\DTOs\\ResponseModel\\LecturerResponse.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\ResponseModel\\LecturerResponse.cs",
+              "RelativeToolTip": "LMS\\DTOs\\ResponseModel\\LecturerResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:51:42.936Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "LecturerRequest.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\RequestModel\\LecturerRequest.cs",
+              "RelativeDocumentMoniker": "LMS\\DTOs\\RequestModel\\LecturerRequest.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\RequestModel\\LecturerRequest.cs",
+              "RelativeToolTip": "LMS\\DTOs\\RequestModel\\LecturerRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:51:24.698Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "LecturerController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Controllers\\LecturerController.cs",
+              "RelativeDocumentMoniker": "LMS\\Controllers\\LecturerController.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Controllers\\LecturerController.cs",
+              "RelativeToolTip": "LMS\\Controllers\\LecturerController.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAiwGcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:50:30.288Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "IStaffService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Services\\Interfaces\\IStaffService.cs",
+              "RelativeDocumentMoniker": "LMS\\Services\\Interfaces\\IStaffService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Services\\Interfaces\\IStaffService.cs",
+              "RelativeToolTip": "LMS\\Services\\Interfaces\\IStaffService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:26:56.746Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "StaffController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Controllers\\StaffController.cs",
+              "RelativeDocumentMoniker": "LMS\\Controllers\\StaffController.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Controllers\\StaffController.cs",
+              "RelativeToolTip": "LMS\\Controllers\\StaffController.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAiwGcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:25:35.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "StaffService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Services\\Implementation\\StaffService.cs",
+              "RelativeDocumentMoniker": "LMS\\Services\\Implementation\\StaffService.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Services\\Implementation\\StaffService.cs",
+              "RelativeToolTip": "LMS\\Services\\Implementation\\StaffService.cs",
+              "ViewState": "AgIAAAEBAAAAAAAAAAAiwCEBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:22:03.712Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "StaffRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Repositories\\Implementation\\StaffRepository.cs",
+              "RelativeDocumentMoniker": "LMS\\Repositories\\Implementation\\StaffRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Repositories\\Implementation\\StaffRepository.cs",
+              "RelativeToolTip": "LMS\\Repositories\\Implementation\\StaffRepository.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAIwDYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:20:41.342Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "StaffResponse.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\ResponseModel\\StaffResponse.cs",
+              "RelativeDocumentMoniker": "LMS\\DTOs\\ResponseModel\\StaffResponse.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\ResponseModel\\StaffResponse.cs",
+              "RelativeToolTip": "LMS\\DTOs\\ResponseModel\\StaffResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T23:18:02.059Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "IStaffRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Repositories\\Interfaces\\IStaffRepository.cs",
+              "RelativeDocumentMoniker": "LMS\\Repositories\\Interfaces\\IStaffRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Repositories\\Interfaces\\IStaffRepository.cs",
+              "RelativeToolTip": "LMS\\Repositories\\Interfaces\\IStaffRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T19:20:47.825Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "StudentResponse.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\ResponseModel\\StudentResponse.cs",
+              "RelativeDocumentMoniker": "LMS\\DTOs\\ResponseModel\\StudentResponse.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\DTOs\\ResponseModel\\StudentResponse.cs",
+              "RelativeToolTip": "LMS\\DTOs\\ResponseModel\\StudentResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T19:09:53.937Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "20250315185851_tic.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250315185851_tic.cs",
+              "RelativeDocumentMoniker": "LMS\\Migrations\\20250315185851_tic.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\Migrations\\20250315185851_tic.cs",
+              "RelativeToolTip": "LMS\\Migrations\\20250315185851_tic.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T18:58:51.295Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\appsettings.json",
+              "RelativeDocumentMoniker": "LMS\\appsettings.json",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\staff and lect backend\\LMS-TIC-Backend\\LMS\\appsettings.json",
+              "RelativeToolTip": "LMS\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-15T18:57:12.903Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

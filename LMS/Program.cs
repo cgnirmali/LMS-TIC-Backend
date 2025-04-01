@@ -43,6 +43,8 @@ namespace LMS
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+            builder.Services.AddScoped<ILecturerRepository, LecturerRepository>();
+            builder.Services.AddScoped<ILecturerService, LecturerService>();
 
 
 
@@ -80,7 +82,10 @@ namespace LMS
             builder.Services.AddScoped<ICourseService ,CourseService>();
             builder.Services.AddScoped<IBatchRepository ,BatchRepository>();
             builder.Services.AddScoped<IBatchService ,BatchService>();
-
+            builder.Services.AddScoped<ISubjectService, SubjectService>();
+            builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
+            builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+            builder.Services.AddScoped<IGroupService, GroupService>();
 
 
             // cors policy added

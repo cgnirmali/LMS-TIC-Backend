@@ -145,9 +145,14 @@ namespace LMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BatchId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Courses");
                 });
@@ -188,12 +193,7 @@ namespace LMS.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NIC")
@@ -484,7 +484,7 @@ namespace LMS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CourseId")
+                    b.Property<Guid>("AssessmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -499,8 +499,6 @@ namespace LMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
 
                     b.ToTable("Subjects");
                 });
@@ -553,7 +551,7 @@ namespace LMS.Migrations
             modelBuilder.Entity("LMS.DB.Entities.Assesment", b =>
                 {
                     b.HasOne("LMS.DB.Entities.Subject", "Subject")
-                        .WithMany("Assesment")
+                        .WithMany("Assessment")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -598,6 +596,10 @@ namespace LMS.Migrations
                         .HasForeignKey("BatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("LMS.DB.Entities.Subject", null)
+                        .WithMany("Course")
+                        .HasForeignKey("SubjectId");
 
                     b.Navigation("Batch");
                 });
@@ -679,17 +681,6 @@ namespace LMS.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("LMS.DB.Entities.Subject", b =>
-                {
-                    b.HasOne("LMS.DB.Entities.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-                });
-
             modelBuilder.Entity("QuizExamSubject", b =>
                 {
                     b.HasOne("LMS.DB.Entities.QuizExam", null)
@@ -725,7 +716,9 @@ namespace LMS.Migrations
 
             modelBuilder.Entity("LMS.DB.Entities.Subject", b =>
                 {
-                    b.Navigation("Assesment");
+                    b.Navigation("Assessment");
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.User", b =>
