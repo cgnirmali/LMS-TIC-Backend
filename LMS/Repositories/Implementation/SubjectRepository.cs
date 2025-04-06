@@ -1,5 +1,5 @@
-﻿using LMS.DB.Entities;
-using LMS.DB;
+﻿using LMS.DB;
+using LMS.DB.Entities;
 using LMS.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,8 +7,6 @@ namespace LMS.Repositories.Implementation
 {
     public class SubjectRepository : ISubjectRepository
     {
-
-
         private readonly AppDbContext _context;
 
         public SubjectRepository(AppDbContext context)
@@ -25,15 +23,12 @@ namespace LMS.Repositories.Implementation
 
         public async Task<List<Subject>> GetSubjectByCourseIdAsync(Guid id)
         {
-
             return await _context.Subjects.Where(s => s.CourseId == id).ToListAsync();
         }
 
         public async Task<Subject> GetSubjectByIdAsync(Guid id)
         {
-
-            var data = await _context.Subjects.FirstOrDefaultAsync(s => s.Id == id);
-            return data;
+            return await _context.Subjects.FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<IEnumerable<Subject>> GetAllSubjectsAsync()
@@ -59,6 +54,3 @@ namespace LMS.Repositories.Implementation
         }
     }
 }
-
-
-

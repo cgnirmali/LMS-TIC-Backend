@@ -1,4 +1,4 @@
-using LMS.DB.Entities;
+﻿using LMS.DB.Entities;
 using LMS.DTOs.RequestModel;
 using LMS.DTOs.ResponseModel;
 using LMS.Repositories.Interfaces;
@@ -15,22 +15,22 @@ using System.Threading.Tasks;
 
 namespace LMS.Services.Implementation
 {
-    public class StaffService : IStaffService
+    public class LecturerService : ILecturerService
     {
-        private readonly IStaffRepository _staffRepository;
+        private readonly ILecturerRepository _lecturerRepository;
         private readonly EmailService _emailService;
         private readonly IConfiguration _configuration;
 
-        public StaffService(IStaffRepository staffRepository, IConfiguration configuration, EmailService emailService)
+        public LecturerService(ILecturerRepository lecturerRepository, IConfiguration configuration, EmailService emailService)
         {
-            _staffRepository = staffRepository;
+            _lecturerRepository = lecturerRepository;
             _emailService = emailService;
             _configuration = configuration;
         }
 
-        public async Task<string> AddStaff(StaffRequest staffRequest, UserStaff_LectureRequest userStaff_LectureRequest)
+        public async Task<string> AddLecturer(LecturerRequest lecturerRequest, UserStaff_LectureRequest userStaff_LectureRequest)
         {
-            if (string.IsNullOrWhiteSpace(staffRequest.Address))
+            if (string.IsNullOrWhiteSpace(lecturerRequest.Address))
                 throw new ArgumentException("Address cannot be null or empty");
 
             if (string.IsNullOrEmpty(userStaff_LectureRequest.Email))
@@ -44,77 +44,77 @@ namespace LMS.Services.Implementation
                 Id = Guid.NewGuid(),
                 Email = userStaff_LectureRequest.Email,
                 Password = hashedPassword,
-                role = Assets.Enums.Role.Staff,
+                role = Assets.Enums.Role.lectures,
                 CreatedDate = DateTime.UtcNow
             };
 
-            await _staffRepository.AddStaffUser(user);
+            await _lecturerRepository.AddLecturerUser(user);
             await _emailService.SendEmailtoLoginAsync(user.Email, "Your Account Credentials", $"Your password: {randomPassword}");
 
-            var staff = new Staff
+            var lecturer = new Lecturer
             {
                 Id = Guid.NewGuid(),
-                Name = staffRequest.Name,
-                PhoneNumber = staffRequest.PhoneNumber,
-                NIC = staffRequest.NIC,
-                Address = staffRequest.Address,
+                Name = lecturerRequest.Name,
+                PhoneNumber = lecturerRequest.PhoneNumber,
+                NIC = lecturerRequest.NIC,
+                Address = lecturerRequest.Address,
                 UserId = user.Id,
                 CreatedDate = DateTime.UtcNow
             };
 
-            await _staffRepository.AddStaff(staff);
+            await _lecturerRepository.AddLecturer(lecturer);
             return CreateToken(user);
         }
 
-        public async Task<List<StaffResponse>> GetAllStaff()
+        public async Task<List<LecturerResponse>> GetAllLecturer()
         {
-            var staffs = await _staffRepository.GetAllStaff();
-            return staffs.Select(s => new StaffResponse
+            var lecturers = await _lecturerRepository.GetAllLecturer();
+            return lecturers.Select(l => new LecturerResponse
             {
-                Id = s.Id,
-                Name = s.Name,
-                Email = s.User.Email,
-                PhoneNumber = s.PhoneNumber,
-                NIC = s.NIC,
-                Address = s.Address
+                Id = l.Id,
+                Name = l.Name,
+                Email = l.User.Email,
+                PhoneNumber = l.PhoneNumber,
+                NIC = l.NIC,
+                Address = l.Address
             }).ToList();
         }
 
-        public async Task<StaffResponse> GetStaffById(Guid id)
+        public async Task<LecturerResponse> GetLecturerById(Guid id)
         {
-            var staff = await _staffRepository.GetStaffById(id);
-            if (staff == null) throw new Exception("Staff not found");
+            var lecturer = await _lecturerRepository.GetLecturerById(id);
+            if (lecturer == null) throw new Exception("Lecturer not found");
 
-            return new StaffResponse
+            return new LecturerResponse
             {
-                Id = staff.Id,
-                Name = staff.Name,
-                Email = staff.User.Email,
-                PhoneNumber = staff.PhoneNumber,
-                NIC = staff.NIC,
-                Address = staff.Address
+                Id = lecturer.Id,
+                Name = lecturer.Name,
+                Email = lecturer.User.Email,
+                PhoneNumber = lecturer.PhoneNumber,
+                NIC = lecturer.NIC,
+                Address = lecturer.Address
             };
         }
 
-        public async Task UpdateStaff(Guid id, StaffRequest staffRequest)
+        public async Task UpdateLecturer(Guid id, LecturerRequest lecturerRequest)
         {
-            var staff = await _staffRepository.GetStaffById(id);
-            if (staff == null) throw new Exception("Staff not found");
+            var lecturer = await _lecturerRepository.GetLecturerById(id);
+            if (lecturer == null) throw new Exception("Lecturer not found");
 
-            staff.Name = staffRequest.Name;
-            staff.PhoneNumber = staffRequest.PhoneNumber;
-            staff.NIC = staffRequest.NIC;
-            staff.Address = staffRequest.Address;
+            lecturer.Name = lecturerRequest.Name;
+            lecturer.PhoneNumber = lecturerRequest.PhoneNumber;
+            lecturer.NIC = lecturerRequest.NIC;
+            lecturer.Address = lecturerRequest.Address;
 
-            await _staffRepository.UpdateStaff(staff);
+            await _lecturerRepository.UpdateLecturer(lecturer);
         }
 
-        public async Task DeleteStaff(Guid id)
+        public async Task DeleteLecturer(Guid id)
         {
-            var staff = await _staffRepository.GetStaffById(id);
-            if (staff == null) throw new Exception("Staff not found");
+            var lecturer = await _lecturerRepository.GetLecturerById(id);
+            if (lecturer == null) throw new Exception("Lecturer not found");
 
-            await _staffRepository.DeleteStaff(staff);
+            await _lecturerRepository.DeleteLecturer(lecturer);
         }
 
         private string CreateToken(User user)
