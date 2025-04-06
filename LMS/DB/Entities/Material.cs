@@ -9,5 +9,10 @@
         public string Description { get; set; }
         public string UploadedBy { get; set; }
         public string URL { get; set; }
+
+        public Guid SubjectId { get; set; }
+
+        //navigation property
+        public Subject Subject { get; set; }
     }
 }

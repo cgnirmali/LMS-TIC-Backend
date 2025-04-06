@@ -11,5 +11,9 @@
         public ICollection<Assesment> Assesment { get; set; }
         public ICollection<QuizExam> QuizExam { get; set; }
 
+        public ICollection<Questions> Questions { get; set; }
+
+        public ICollection<Material> Materials { get; set; }    
+
     }
 }
