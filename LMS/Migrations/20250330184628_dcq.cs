@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LMS.Migrations
 {
     /// <inheritdoc />
-    public partial class ad : Migration
+    public partial class dcq : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Batchs",
+                name: "Batches",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -21,7 +21,7 @@ namespace LMS.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Batchs", x => x.Id);
+                    table.PrimaryKey("PK_Batches", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,18 +72,16 @@ namespace LMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Subjects",
+                name: "Schedules",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AssesmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ScheduleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ClassSchedule = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subjects", x => x.Id);
+                    table.PrimaryKey("PK_Schedules", x => x.ScheduleId);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,37 +90,13 @@ namespace LMS.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsEmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    UTEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Roll = table.Column<int>(type: "int", nullable: false),
-                    IsVerified = table.Column<bool>(type: "bit", nullable: false)
+                    role = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Assesments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DueTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Assesments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Assesments_Subjects_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,47 +106,35 @@ namespace LMS.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BatchId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    BatchId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_Batchs_BatchId",
+                        name: "FK_Courses_Batches_BatchId",
                         column: x => x.BatchId,
-                        principalTable: "Batchs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Courses_Subjects_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subjects",
+                        principalTable: "Batches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "QuizExamSubject",
+                name: "Holiday",
                 columns: table => new
                 {
-                    QuizExamId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SubjectsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    holiday = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ScheduleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuizExamSubject", x => new { x.QuizExamId, x.SubjectsId });
+                    table.PrimaryKey("PK_Holiday", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuizExamSubject_QuizExam_QuizExamId",
-                        column: x => x.QuizExamId,
-                        principalTable: "QuizExam",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_QuizExamSubject_Subjects_SubjectsId",
-                        column: x => x.SubjectsId,
-                        principalTable: "Subjects",
-                        principalColumn: "Id",
+                        name: "FK_Holiday_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedules",
+                        principalColumn: "ScheduleId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -185,7 +147,6 @@ namespace LMS.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NIC = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -207,6 +168,7 @@ namespace LMS.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OtpType = table.Column<int>(type: "int", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -233,8 +195,7 @@ namespace LMS.Migrations
                     NIC = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -253,18 +214,17 @@ namespace LMS.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UTNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NIC = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UTNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    status = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AdminVerify = table.Column<bool>(type: "bit", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -298,25 +258,145 @@ namespace LMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Schedules",
+                name: "Subjects",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LecturerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Schedules", x => x.Id);
+                    table.PrimaryKey("PK_Subjects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Schedules_Lecturers_LecturerId",
-                        column: x => x.LecturerId,
-                        principalTable: "Lecturers",
+                        name: "FK_Subjects_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FingerReaderTable",
+                columns: table => new
+                {
+                    FingerReaderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UTNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Time = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FingerReaderTable", x => x.FingerReaderID);
+                    table.ForeignKey(
+                        name: "FK_FingerReaderTable_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ScheduleDetail",
+                columns: table => new
+                {
+                    ScheduleDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StartTime = table.Column<TimeSpan>(type: "time", nullable: true),
+                    EndTime = table.Column<TimeSpan>(type: "time", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ScheduleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ScheduleDetail", x => x.ScheduleDetailsId);
+                    table.ForeignKey(
+                        name: "FK_ScheduleDetail_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ScheduleDetail_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedules",
+                        principalColumn: "ScheduleId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Assesments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DueTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assesments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Assesments_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuizExamSubject",
+                columns: table => new
+                {
+                    QuizExamId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubjectsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuizExamSubject", x => new { x.QuizExamId, x.SubjectsId });
+                    table.ForeignKey(
+                        name: "FK_QuizExamSubject_QuizExam_QuizExamId",
+                        column: x => x.QuizExamId,
+                        principalTable: "QuizExam",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuizExamSubject_Subjects_SubjectsId",
+                        column: x => x.SubjectsId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Attendances",
+                columns: table => new
+                {
+                    AttendanceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AttendanceStatus = table.Column<int>(type: "int", nullable: false),
+                    FingerReaderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FingerReaderTableFingerReaderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attendances", x => x.AttendanceId);
+                    table.ForeignKey(
+                        name: "FK_Attendances_FingerReaderTable_FingerReaderTableFingerReaderID",
+                        column: x => x.FingerReaderTableFingerReaderID,
+                        principalTable: "FingerReaderTable",
+                        principalColumn: "FingerReaderID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Attendances_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -349,45 +429,6 @@ namespace LMS.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Attendances",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Attendances", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Attendances_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MarkingAttences",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AttendanceStatus = table.Column<int>(type: "int", nullable: false),
-                    AttendanceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MarkingAttences", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MarkingAttences_Attendances_AttendanceId",
-                        column: x => x.AttendanceId,
-                        principalTable: "Attendances",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Assesments_SubjectId",
                 table: "Assesments",
@@ -404,6 +445,11 @@ namespace LMS.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Attendances_FingerReaderTableFingerReaderID",
+                table: "Attendances",
+                column: "FingerReaderTableFingerReaderID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Attendances_StudentId",
                 table: "Attendances",
                 column: "StudentId");
@@ -414,9 +460,9 @@ namespace LMS.Migrations
                 column: "BatchId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_SubjectId",
-                table: "Courses",
-                column: "SubjectId");
+                name: "IX_FingerReaderTable_StudentId",
+                table: "FingerReaderTable",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_CourseId",
@@ -424,15 +470,15 @@ namespace LMS.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Holiday_ScheduleId",
+                table: "Holiday",
+                column: "ScheduleId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Lecturers_UserId",
                 table: "Lecturers",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MarkingAttences_AttendanceId",
-                table: "MarkingAttences",
-                column: "AttendanceId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OTPs_UserId",
@@ -445,9 +491,15 @@ namespace LMS.Migrations
                 column: "SubjectsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Schedules_LecturerId",
-                table: "Schedules",
-                column: "LecturerId");
+                name: "IX_ScheduleDetail_GroupId",
+                table: "ScheduleDetail",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ScheduleDetail_ScheduleId",
+                table: "ScheduleDetail",
+                column: "ScheduleId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Staffs_UserId",
@@ -458,6 +510,11 @@ namespace LMS.Migrations
                 name: "IX_Students_UserId",
                 table: "Students",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subjects_CourseId",
+                table: "Subjects",
+                column: "CourseId");
         }
 
         /// <inheritdoc />
@@ -467,10 +524,13 @@ namespace LMS.Migrations
                 name: "AssesmentsSubmissions");
 
             migrationBuilder.DropTable(
-                name: "Groups");
+                name: "Attendances");
 
             migrationBuilder.DropTable(
-                name: "MarkingAttences");
+                name: "Holiday");
+
+            migrationBuilder.DropTable(
+                name: "Lecturers");
 
             migrationBuilder.DropTable(
                 name: "Materials");
@@ -485,7 +545,7 @@ namespace LMS.Migrations
                 name: "QuizExamSubject");
 
             migrationBuilder.DropTable(
-                name: "Schedules");
+                name: "ScheduleDetail");
 
             migrationBuilder.DropTable(
                 name: "Staffs");
@@ -494,19 +554,16 @@ namespace LMS.Migrations
                 name: "Assesments");
 
             migrationBuilder.DropTable(
-                name: "Courses");
-
-            migrationBuilder.DropTable(
-                name: "Attendances");
+                name: "FingerReaderTable");
 
             migrationBuilder.DropTable(
                 name: "QuizExam");
 
             migrationBuilder.DropTable(
-                name: "Lecturers");
+                name: "Groups");
 
             migrationBuilder.DropTable(
-                name: "Batchs");
+                name: "Schedules");
 
             migrationBuilder.DropTable(
                 name: "Subjects");
@@ -515,7 +572,13 @@ namespace LMS.Migrations
                 name: "Students");
 
             migrationBuilder.DropTable(
+                name: "Courses");
+
+            migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Batches");
         }
     }
 }

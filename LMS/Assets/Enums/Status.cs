@@ -4,8 +4,8 @@ namespace LMS.Assets.Enums
 {
     public enum Status
     {
-        completed =1,
-        OnGoing =2,
-        Failed=3,
+        Dropped = 0,
+        Ongoing = 1,
+        Completed = 2,
     }
 }
