@@ -20,20 +20,17 @@ namespace LMS.Controllers
         public async Task<IActionResult> CreateSubject([FromBody] SubjectRequest request)
         {
             var response = await _subjectService.CreateSubjectAsync(request);
-            //return CreatedAtAction(nameof(GetSubjectById), new { id = response.Id }, response);
-            return Ok(response);
+            return CreatedAtAction(nameof(GetSubjectById), new { id = response.Id }, response);
         }
 
-        [HttpGet("{CourseId}")]
-        public async Task<IActionResult> GetSubjectByCourseId(Guid CourseId)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSubjectById(Guid id)
         {
-            var response = await _subjectService.GetSubjectByCourseIdAsync(CourseId);
+            var response = await _subjectService.GetSubjectByIdAsync(id);
             if (response == null)
                 return NotFound();
             return Ok(response);
         }
-
-       
 
         [HttpGet]
         public async Task<IActionResult> GetAllSubjects()
@@ -60,5 +57,4 @@ namespace LMS.Controllers
             return NoContent();
         }
     }
-
 }

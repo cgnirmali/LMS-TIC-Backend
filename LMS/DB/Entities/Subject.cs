@@ -7,9 +7,10 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public Guid CourseId { get; set; }
+
+        // Navigation properties
         public Course Course { get; set; }
         public ICollection<Assesment> Assesment { get; set; }
         public ICollection<QuizExam> QuizExam { get; set; }
-
     }
 }
