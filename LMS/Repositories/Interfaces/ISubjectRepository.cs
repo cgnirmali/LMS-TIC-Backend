@@ -4,7 +4,6 @@ namespace LMS.Repositories.Interfaces
 {
     public interface ISubjectRepository
     {
-
         Task<Subject> AddSubjectAsync(Subject subject);
         Task<List<Subject>> GetSubjectByCourseIdAsync(Guid id);
         Task<Subject> GetSubjectByIdAsync(Guid id);

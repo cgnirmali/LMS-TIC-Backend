@@ -15,17 +15,17 @@ namespace LMS.Controllers
     {
         private readonly IUserService _userService;
         private readonly IUserRepository _userRepository;
-        IStudentRepository _studentRepository;
-        IStudentService _studentService;
-        private readonly AppDbContext _Context;
-        public StudentController(IUserService userService, IUserRepository userRepository,IStudentRepository studentRepository, IStudentService studentService,AppDbContext appDbContext)
+        private readonly IStudentRepository _studentRepository;
+        private readonly AppDbContext _appDbContext;
+        private readonly IStudentService _studentService;
+
+        public StudentController(IUserService userService, IUserRepository userRepository, IStudentRepository studentRepository, IStudentService studentService, AppDbContext appDbContext)
         {
             _userService = userService;
             _userRepository = userRepository;
             _studentRepository = studentRepository;
+            _appDbContext = appDbContext;
             _studentService = studentService;
-            _Context = appDbContext;
-
         }
 
         [HttpPost("Add-new-student")]
@@ -44,7 +44,6 @@ namespace LMS.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
 
         [HttpPut("Update-Student/{studentId}")]
         public async Task<IActionResult> UpdateStudent(Guid studentId, [FromBody] UpdateStudentDto request)
@@ -66,7 +65,7 @@ namespace LMS.Controllers
                 Address = request.Address
             };
 
-            bool isUpdated = await _studentService.UpdateStudentAsync(studentId, updatedStudent, request.NewPassword , request.UTEmail);
+            bool isUpdated = await _studentService.UpdateStudentAsync(studentId, updatedStudent, request.NewPassword, request.UTEmail);
 
             if (isUpdated)
             {
@@ -78,27 +77,22 @@ namespace LMS.Controllers
             }
         }
 
-
         [HttpDelete("DeleteStudents/{id}")]
         public async Task<IActionResult> DeleteStudent(Guid id)
         {
-            using var transaction = await _Context.Database.BeginTransactionAsync(); // ✅ Start transaction
+            using var transaction = await _appDbContext.Database.BeginTransactionAsync(); // ✅ Start transaction
             try
             {
-   
-              var data = await _studentService.DeleteStudent(id);
+                var data = await _studentService.DeleteStudent(id);
                 await transaction.CommitAsync(); // ✅ Commit if everything is successful
                 return Ok(data);
-             
             }
             catch (Exception)
             {
                 await transaction.RollbackAsync(); // ❌ Rollback if any error occurs
                 throw; // Rethrow the exception
             }
-
         }
-
 
         [HttpGet("Get-Student-By-Id/{studentId}")]
         public async Task<IActionResult> GetStudentById(Guid studentId)
@@ -112,7 +106,6 @@ namespace LMS.Controllers
 
             return Ok(student); // Return student details including User info
         }
-
 
         [HttpGet("GetStudent-By-Email")]
         public async Task<IActionResult> GetStudentByEmail(string email)
@@ -142,38 +135,19 @@ namespace LMS.Controllers
             }
         }
 
-
-        //[HttpPost("register-new-student")]
-        //public async Task<IActionResult> Register(RegisterRequest registerRequest)
-        //{
-        //    try
-        //    {
-        //        var user = await _userRepository.GetUserByEmailAsync(registerRequest.Email);
-        //        if (user == null || user.IsEmailConfirmed == false) return BadRequest("Verify Your Email");
-
-        //        await _userService.Register(registerRequest);
-        //        return Ok("Student Registered Succesfully");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
-        //[HttpPost("Verify-student")]
-        //public async Task<IActionResult> VerifyRegister(Guid id)
-        //{
-        //    try
-        //    {
-        //        await _studentRepository.VerifyRegister(id);
-        //        return Ok("Student Registered By Admin");
-        //    }
-        //    catch (Exception ex) 
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
-
+        [HttpGet("Get-All-Students-From-DB")]
+        public async Task<IActionResult> GetAllStudentsFromDb()
+        {
+            try
+            {
+                var data = await _appDbContext.Students.ToListAsync();
+                if (data == null) throw new Exception("Students Not found");
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
