@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250315061134_fgkkj")]
-    partial class fgkkj
+    [Migration("20250317060020_tic")]
+    partial class tic
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -196,12 +196,7 @@ namespace LMS.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NIC")
@@ -321,6 +316,9 @@ namespace LMS.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("OtpType")
                         .HasColumnType("int");
 
@@ -401,12 +399,7 @@ namespace LMS.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NIC")
@@ -438,7 +431,6 @@ namespace LMS.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("AdminVerify")
@@ -495,7 +487,7 @@ namespace LMS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AssesmentId")
+                    b.Property<Guid>("AssessmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -524,6 +516,7 @@ namespace LMS.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsEmailConfirmed")
@@ -535,7 +528,7 @@ namespace LMS.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Roll")
+                    b.Property<int>("role")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -561,7 +554,7 @@ namespace LMS.Migrations
             modelBuilder.Entity("LMS.DB.Entities.Assesment", b =>
                 {
                     b.HasOne("LMS.DB.Entities.Subject", "Subject")
-                        .WithMany("Assesment")
+                        .WithMany("Assessment")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -617,7 +610,7 @@ namespace LMS.Migrations
             modelBuilder.Entity("LMS.DB.Entities.Group", b =>
                 {
                     b.HasOne("LMS.DB.Entities.Course", "Course")
-                        .WithMany("Group")
+                        .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -717,11 +710,6 @@ namespace LMS.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("LMS.DB.Entities.Course", b =>
-                {
-                    b.Navigation("Group");
-                });
-
             modelBuilder.Entity("LMS.DB.Entities.Student", b =>
                 {
                     b.Navigation("Assesmentsubmission");
@@ -731,7 +719,7 @@ namespace LMS.Migrations
 
             modelBuilder.Entity("LMS.DB.Entities.Subject", b =>
                 {
-                    b.Navigation("Assesment");
+                    b.Navigation("Assessment");
 
                     b.Navigation("Course");
                 });

@@ -5,7 +5,7 @@
 namespace LMS.Migrations
 {
     /// <inheritdoc />
-    public partial class ghjk : Migration
+    public partial class janushan : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
