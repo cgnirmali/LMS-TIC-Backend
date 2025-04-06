@@ -1,8 +1,5 @@
-
 using LMS.DB;
-
 using LMS.DB.Entities.Email;
-
 using LMS.Repositories.Implementation;
 using LMS.Repositories.Interfaces;
 using LMS.Services.Implementation;
@@ -20,33 +17,39 @@ namespace LMS
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-
-            // db configuration
+            // DB configuration
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
 
             // Register EmailConfig
             builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
-
             // Register Email services
             builder.Services.AddScoped<EmailService>();
-            //builder.Services.AddScoped<SendMailRepository>();
-            //builder.Services.AddScoped<EmailServiceProvider>();
 
-
+            // Register repositories and services
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddScoped<ISubjectService, SubjectService>();
+            builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
+            builder.Services.AddScoped<IStaffRepository, StaffRepository>();
+            builder.Services.AddScoped<IStaffService, StaffService>();
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<ICourseService, CourseService>();
+            builder.Services.AddScoped<IBatchRepository, BatchRepository>();
+            builder.Services.AddScoped<IBatchService, BatchService>();
+            builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+            builder.Services.AddScoped<IGroupService, GroupService>();
+            builder.Services.AddScoped<ILecturerService, LecturerService>();
+            builder.Services.AddScoped<ILecturerRepository, LecturerRepository>();
 
-            
-            // JWT Authentication Configuration
+            // JWT Authentication Configuration (if needed)
             //builder.Services.AddAuthentication(options =>
             //{
             //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -66,31 +69,10 @@ namespace LMS
             //    };
             //});
 
-
             // Ensure EmailConfig is available as a singleton if needed
-            builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<EmailConfig>>().Value);
+            builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<EmailSettings>>().Value);
 
-
-            builder.Services.AddScoped<IStaffRepository, StaffRepository>();
-            builder.Services.AddScoped<IStaffService, StaffService>();
-            builder.Services.AddScoped<EmailService>();
-            builder.Services.AddScoped<IUserService, UserService>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<ICourseRepository ,CourseRepository>();  
-            builder.Services.AddScoped<ICourseService ,CourseService>();
-            builder.Services.AddScoped<IBatchRepository ,BatchRepository>();
-            builder.Services.AddScoped<IBatchService ,BatchService>();
-            builder.Services.AddScoped<IGroupRepository , GroupRepository>();
-            builder.Services.AddScoped<IGroupService , GroupService>();
-            builder.Services.AddScoped<ISubjectService, SubjectService>();
-            builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
-            builder.Services.AddScoped<ILecturerService, LecturerService>();
-            builder.Services.AddScoped<ILecturerRepository, LecturerRepository>();
-
-
-
-
-            // cors policy added
+            // CORS policy added
             builder.Services.AddCors(options =>
             {
                 options.AddDefaultPolicy(policy =>
@@ -100,6 +82,7 @@ namespace LMS
                           .AllowAnyMethod();
                 });
             });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -108,12 +91,12 @@ namespace LMS
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
             app.UseCors();
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

@@ -3,7 +3,6 @@ using LMS.DB.Entities;
 using LMS.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace LMS.Repositories.Implementation
 {
     public class SubjectRepository : ISubjectRepository
@@ -20,6 +19,11 @@ namespace LMS.Repositories.Implementation
             _context.Subjects.Add(subject);
             await _context.SaveChangesAsync();
             return subject;
+        }
+
+        public async Task<List<Subject>> GetSubjectByCourseIdAsync(Guid id)
+        {
+            return await _context.Subjects.Where(s => s.CourseId == id).ToListAsync();
         }
 
         public async Task<Subject> GetSubjectByIdAsync(Guid id)
@@ -50,4 +54,3 @@ namespace LMS.Repositories.Implementation
         }
     }
 }
-

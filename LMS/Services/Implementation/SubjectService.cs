@@ -1,4 +1,4 @@
-﻿using LMS.DB.Entities;
+using LMS.DB.Entities;
 using LMS.DTOs.RequestModel;
 using LMS.DTOs.ResponseModel;
 using LMS.Repositories.Interfaces;
@@ -34,6 +34,20 @@ namespace LMS.Services.Implementation
                 Name = createdSubject.Name,
                 Description = createdSubject.Description
             };
+        }
+
+        public async Task<List<SubjectResponse>> GetSubjectByCourseIdAsync(Guid courseId)
+        {
+            var subjects = await _subjectRepository.GetSubjectByCourseIdAsync(courseId);
+            if (subjects == null || !subjects.Any()) return new List<SubjectResponse>();
+
+            return subjects.Select(subject => new SubjectResponse
+            {
+                Id = subject.Id,
+                CreatedDate = subject.CreatedDate,
+                Name = subject.Name,
+                Description = subject.Description
+            }).ToList();
         }
 
         public async Task<SubjectResponse> GetSubjectByIdAsync(Guid id)
@@ -86,5 +100,4 @@ namespace LMS.Services.Implementation
             return await _subjectRepository.DeleteSubjectAsync(id);
         }
     }
-
 }

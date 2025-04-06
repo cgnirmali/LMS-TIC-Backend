@@ -14,10 +14,10 @@ namespace LMS.Repositories.Interfaces
         Task<OTP> CheckOTPExits(string otp);
         Task<User> ChangePassword(string email, string password);
         Task RemoveOTP(string otp);
-        Task AddNewStudent(Student student);
+       
         Task<User> GetUserById(Guid id);
         Task<OTP> GetOtpByUserId(Guid id);
-        Task updateUserIsEmailConfirmed(Guid id);
+        //Task updateUserIsEmailConfirmed(Guid id);
         Task DeleteUser(Guid id);
         //Task<User> getElementByEmail(string email);
         Task<OTP> GetOtpByEmailAsync(string email);

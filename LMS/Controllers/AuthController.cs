@@ -39,7 +39,7 @@ namespace LMS.Controllers
                     var adminId = Guid.NewGuid();
                     var adminToken = _userService.CreateToken(new User
                     {
-                        Email = adminEmail,
+                        UTEmail = adminEmail,
                         Id = adminId,
                         role = Role.Admin,
                     });
@@ -49,7 +49,7 @@ namespace LMS.Controllers
                         Token = adminToken,
                         User = new
                         {
-                            Email = adminEmail,
+                            UTEmail = adminEmail,
                             Role = Role.Admin,
                             UserId = adminId
                         }
@@ -68,7 +68,7 @@ namespace LMS.Controllers
                     Token = token,
                     User = new
                     {
-                        Email = user.Email,
+                        UTEmail = user.UTEmail,
                         Role = user.role,
                         UserId = user.Id
                     }

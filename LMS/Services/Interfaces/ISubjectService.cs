@@ -11,5 +11,4 @@ namespace LMS.Services.Interfaces
         Task<SubjectResponse> UpdateSubjectAsync(Guid id, SubjectRequest request);
         Task<bool> DeleteSubjectAsync(Guid id);
     }
-
 }

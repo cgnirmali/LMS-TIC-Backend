@@ -50,10 +50,12 @@ namespace LMS.Services.Implementation
             {
                 throw new Exception("User Not Found");
             }
+            // bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Passssword);
 
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+           // bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
 
-            if (!isPasswordValid)
+
+            if (user.Password != password)
                 throw new Exception("Password Not Match");
 
             var role = user.role.ToString();
@@ -85,22 +87,7 @@ namespace LMS.Services.Implementation
 
         }
 
-        public async Task<bool> VerifyOtpAsync(OtpVerifyDto otpVerifyDto)
-        { 
-            var record = await _userRepository.GetUserByEmailAsync(otpVerifyDto.Email);
-            var otpRecord = await _userRepository.GetOtpByUserId(record.Id);
-            if (otpRecord == null || otpRecord.Code != otpVerifyDto.Otp || otpRecord.OtpType != OtpType.Registration)
-            {
-                await _userRepository.DeleteUser(record.Id);
-                throw new Exception("Invalid OTP");
-            }
-            else
-            {
-                await _userRepository.updateUserIsEmailConfirmed(record.Id);
-                await _userRepository.RemoveOTP(otpVerifyDto.Otp);
-                return true;
-            }
-        }
+       
 
         public async Task<bool> ChangePassword(string email,string password)
         {
@@ -108,75 +95,14 @@ namespace LMS.Services.Implementation
             return data != null ? true : false;
         }
 
-        public async Task<bool> SendOtpAsync(string email)
-        {
-            string otp = GenerateOtp();
-            var today = DateTime.Now;
-            var expirationTime = DateTime.UtcNow.AddMinutes(7);
-
-            // Check if the user already exists
-            var user = await _userRepository.GetUserByEmailAsync(email);
-
-            if (user == null)
-            {
-                // If user does not exist, create a new one
-                user = new User
-                {
-                    Email = email,
-                    Id = Guid.NewGuid(),
-                    Password = null,
-                    IsVerified = false,
-                    role = Role.Student,
-                    CreatedDate = today
-                };
-
-                await _userRepository.AddUserAsync(user);
-            }
-            else
-            {
-                // If user exists, check for existing OTP
-                var existingOtp = await _userRepository.GetOtpByEmailAsync(email);
-
-                if (existingOtp != null && !user.IsEmailConfirmed)
-                {
-                    // Remove old OTP if not verified
-                    await _userRepository.RemoveOTP(existingOtp.Code);
-
-                }
-            }
-
-            // Generate new OTP and save it
-            var otpEntity = new OTP
-            {
-                UserEmail = email,
-                Code = otp,
-                CreatedDate = today,
-                EndTime = expirationTime,
-                User = user,
-                OtpType = OtpType.Registration
-            };
-
-            await _userRepository.SaveOTP(otpEntity);
-
-            // Send email
-            var mailRequest = new MailRequest
-            {
-                User = user,
-                Type = EmailType.OTP,
-                Otp = otp
-            };
-
-            await _sendMailService.SendEmail(mailRequest);
-
-            return true;
-        }
+        
 
 
         public TokenModel CreateToken(User user)
         {
             var claimsList = new List<Claim>();
             claimsList.Add(new Claim("Id", user.Id.ToString()));
-            claimsList.Add(new Claim("Email", user.Email));
+            claimsList.Add(new Claim("Email", user.UTEmail));
 
             claimsList.Add(new Claim("Role", user.role.ToString()));
 
@@ -203,44 +129,85 @@ namespace LMS.Services.Implementation
         }
 
 
-
-
-        //var key = _configuration["JWT:Key"];
-        //    var secKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key));
-        //    var credentials = new SigningCredentials(secKey, SecurityAlgorithms.HmacSha256);
-
-        //claims: claims,
-        //              expires: DateTime.Now.AddDays(30),
-        //              signingCredentials: credentials
-        //          );
-
-        //    return new JwtSecurityTokenHandler().WriteToken(token);
+        //public async Task<bool> VerifyOtpAsync(OtpVerifyDto otpVerifyDto)
+        //{ 
+        //    var record = await _userRepository.GetUserByEmailAsync(otpVerifyDto.Email);
+        //    var otpRecord = await _userRepository.GetOtpByUserId(record.Id);
+        //    if (otpRecord == null || otpRecord.Code != otpVerifyDto.Otp || otpRecord.OtpType != OtpType.Registration)
+        //    {
+        //        await _userRepository.DeleteUser(record.Id);
+        //        throw new Exception("Invalid OTP");
+        //    }
+        //    else
+        //    {
+        //        await _userRepository.updateUserIsEmailConfirmed(record.Id);
+        //        await _userRepository.RemoveOTP(otpVerifyDto.Otp);
+        //        return true;
+        //    }
         //}
 
 
-
-
-        //private readonly IUserRepository _userRepository;
-        //private readonly IConfiguration _configuration;
-
-
-        //public UserService (IUserRepository userRepository , IConfiguration configuration)
+        //public async Task<bool> SendOtpAsync(string email)
         //{
-        //    _userRepository = userRepository;
-        //    _configuration = configuration;
-        //}
+        //    string otp = GenerateOtp();
+        //    var today = DateTime.Now;
+        //    var expirationTime = DateTime.UtcNow.AddMinutes(7);
 
+        //    // Check if the user already exists
+        //    var user = await _userRepository.GetUserByEmailAsync(email);
 
-        //public async Task<string>  loginUser (string email, string password)
-        //{
-        //    var data =await _userRepository.getElementByEmail(email);
-        //    if (data == null) throw new Exception("User not found.");
-        //    if (!BCrypt.Net.BCrypt.Verify(password, data.Password))
-        //        throw new Exception("Incorrect password.");
+        //    if (user == null)
+        //    {
+        //        // If user does not exist, create a new one
+        //        user = new User
+        //        {
+        //            UTEmail = email,
+        //            Id = Guid.NewGuid(),
+        //            Password = null,
+        //            IsVerified = false,
+        //            role = Role.Student,
+        //            CreatedDate = today
+        //        };
 
-        //    return CreateToken(data);
+        //        await _userRepository.AddUserAsync(user);
+        //    }
+        //    else
+        //    {
+        //        // If user exists, check for existing OTP
+        //        var existingOtp = await _userRepository.GetOtpByEmailAsync(email);
 
+        //        if (existingOtp != null && !user.IsEmailConfirmed)
+        //        {
+        //            // Remove old OTP if not verified
+        //            await _userRepository.RemoveOTP(existingOtp.Code);
 
+        //        }
+        //    }
+
+        //    // Generate new OTP and save it
+        //    var otpEntity = new OTP
+        //    {
+        //        UserEmail = email,
+        //        Code = otp,
+        //        CreatedDate = today,
+        //        EndTime = expirationTime,
+        //        User = user,
+        //        OtpType = OtpType.Registration
+        //    };
+
+        //    await _userRepository.SaveOTP(otpEntity);
+
+        //    // Send email
+        //    var mailRequest = new MailRequest
+        //    {
+        //        User = user,
+        //        Type = EmailType.OTP,
+        //        Otp = otp
+        //    };
+
+        //    await _sendMailService.SendEmail(mailRequest);
+
+        //    return true;
         //}
 
 
@@ -281,81 +248,81 @@ namespace LMS.Services.Implementation
 
         //}
 
-        public async Task<Info> Register(RegisterRequest request)
-        {
-            var user = await _userRepository.GetUserByEmailAsync(request.Email);
+        //public async Task<Info> Register(RegisterRequest request)
+        //{
+        //    var user = await _userRepository.GetUserByEmailAsync(request.Email);
 
-            if (user == null)
-            {
-                var info4 = new Info
-                {
-                    text = "User No"
-                };
+        //    if (user == null)
+        //    {
+        //        var info4 = new Info
+        //        {
+        //            text = "User No"
+        //        };
 
-                return info4;
-            }
+        //        return info4;
+        //    }
 
-            if (!user.IsEmailConfirmed)
-            {
-                var info3 = new Info
-                {
-                    text = "Please verify your email before registering as a student"
-                };
+        //    if (!user.IsEmailConfirmed)
+        //    {
+        //        var info3 = new Info
+        //        {
+        //            text = "Please verify your email before registering as a student"
+        //        };
 
-                return info3;
-            }
+        //        return info3;
+        //    }
 
-            var existstudent = await _studentRepository.GetStudentByEmail(user.Email);
-            if (existstudent != null)
-            {
-                var info2 = new Info
-                {
-                    text = "Student already exists"
-                };
+        //    var existstudent = await _studentRepository.GetStudentByEmail(user.Email);
+        //    if (existstudent != null)
+        //    {
+        //        var info2 = new Info
+        //        {
+        //            text = "Student already exists"
+        //        };
 
-                return info2;
-            }
+        //        return info2;
+        //    }
 
-            if (request.Password != request.ConfirmPassword)
-            {
-                var info1 = new Info
-                {
-                    text = "Password and Confirm Password do not match"
-                };
+        //    if (request.Password != request.ConfirmPassword)
+        //    {
+        //        var info1 = new Info
+        //        {
+        //            text = "Password and Confirm Password do not match"
+        //        };
 
-                return info1;
-            }
+        //        return info1;
+        //    }
 
-            var student = new Student
-            {
-                CreatedDate = DateTime.Now,
-                UserId = user.Id,
-                NIC = request.NIC,
-                PhoneNumber = request.PhoneNumber,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                Gender = request.Gender,
-                ImageUrl = request.ImageUrl,
-                UTNumber = request.UTNumber,
-                AdminVerify = true,
-                Address = request.Address
-            };
+        //    var student = new Student
+        //    {
+        //        CreatedDate = DateTime.Now,
+        //        UserId = user.Id,
+        //        NIC = request.NIC,
+        //        PhoneNumber = request.PhoneNumber,
+        //        FirstName = request.FirstName,
+        //        LastName = request.LastName,
+        //        Email = request.Email,
+        //        Gender = request.Gender,
+        //        ImageUrl = request.ImageUrl,
+        //        UTNumber = request.UTNumber,
+        //        AdminVerify = true,
+        //        Address = request.Address
+        //    };
 
-            // Change Password
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            await _userRepository.ChangePassword(user.Email, hashedPassword);
+        //    // Change Password
+        //    var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
+        //    await _userRepository.ChangePassword(user.Email, hashedPassword);
 
-            // Add Student
-            await _userRepository.AddNewStudent(student);
+        //    // Add Student
+        //    await _studentRepository.AddNewStudent(student);
 
-            var info = new Info
-            {
-                text = "Student Registered successfully"
-            };
+        //    var info = new Info
+        //    {
+        //        text = "Student Registered successfully"
+        //    };
 
-            return info;
-        }
+        //    return info;
+        //}
 
 
 

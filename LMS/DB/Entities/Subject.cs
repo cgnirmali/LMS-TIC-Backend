@@ -6,11 +6,11 @@
         public DateTime CreatedDate { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Guid AssessmentId { get; set; }  // Corrected property name
+        public Guid CourseId { get; set; }
 
         // Navigation properties
-        public ICollection<Course> Course { get; set; }
-        public ICollection<Assesment> Assessment { get; set; }  // Corrected the spelling here too
+        public Course Course { get; set; }
+        public ICollection<Assesment> Assesment { get; set; }
         public ICollection<QuizExam> QuizExam { get; set; }
     }
 }

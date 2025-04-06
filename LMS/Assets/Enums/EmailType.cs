@@ -5,5 +5,6 @@
         None = 0,
         OTP = 1,
         Deactive = 2,
+        Register= 3,
     }
 }

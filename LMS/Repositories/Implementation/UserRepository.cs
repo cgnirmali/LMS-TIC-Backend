@@ -31,7 +31,7 @@ namespace LMS.Repositories.Implementation
         }
         public async Task<User> GetUserByEmailAsync(string email)
         {
-           var data = await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
+           var data = await _context.Users.SingleOrDefaultAsync(u => u.UTEmail == email);
             return data;
         }
 
@@ -67,7 +67,7 @@ namespace LMS.Repositories.Implementation
         }
         public async Task<User> ChangePassword(string email, string password)
         {
-            var data = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            var data = await _context.Users.FirstOrDefaultAsync(x => x.UTEmail == email);
             if (data == null) throw new Exception("User Not Found");
             data.Password = password;
             _context.Users.Update(data);
@@ -75,11 +75,7 @@ namespace LMS.Repositories.Implementation
             return data;
         }
 
-        public async Task AddNewStudent(Student student) 
-        {
-        await _context.Students.AddAsync(student);
-        await _context.SaveChangesAsync();  
-        }
+       
 
         public async Task<User> GetUserById(Guid id)
         {
@@ -93,12 +89,12 @@ namespace LMS.Repositories.Implementation
             await _context.SaveChangesAsync();
         }
 
-        public async Task updateUserIsEmailConfirmed(Guid id)
-        {
-            var data = await GetUserById(id);
-            data.IsEmailConfirmed = true;
-            await _context.SaveChangesAsync();
-        }
+        //public async Task updateUserIsEmailConfirmed(Guid id)
+        //{
+        //    var data = await GetUserById(id);
+        //    data.IsEmailConfirmed = true;
+        //    await _context.SaveChangesAsync();
+        //}
 
         public async Task<OTP> GetOtpByUserId(Guid id)
         { 
