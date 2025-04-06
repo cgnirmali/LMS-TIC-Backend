@@ -23,11 +23,15 @@ namespace LMS.DB.Entities
         //public bool AdminVerify { get; set; }
         public string? Address { get; set; }
 
+
+
         //navigation property
         public User User { get; set; }
-    
+        
         public ICollection<AssesmentSubmission> Assesmentsubmission { get; set; }
         public ICollection<Attendance> Attendance { get; set; }
+
+        public  ICollection <StudentAttempts> StudentAttempts { get; set; }
 
     }
 }

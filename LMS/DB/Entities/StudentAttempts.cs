@@ -11,6 +11,14 @@ namespace LMS.DB.Entities
         public int Score { get; set; }
         public Status Status { get; set; }
 
+        public Guid QuizExamId { get; set; }
+
+        public Guid StudentId { get; set; }
+
+        // navigation property
+        public QuizExam QuizExam { get; set; }
+        public Student Student { get; set; }
+
 
     }
 }

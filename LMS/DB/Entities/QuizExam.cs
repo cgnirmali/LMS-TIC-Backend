@@ -9,6 +9,7 @@
 
         //navigation property
         public ICollection<Subject> Subjects { get; set; } 
+        public ICollection<StudentAttempts> StudentAttempts { get; set; }
 
     }
 }
