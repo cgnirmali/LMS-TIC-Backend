@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LMS.Assets.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace LMS.DB.Entities
 {
@@ -11,7 +12,10 @@ namespace LMS.DB.Entities
         public TimeSpan? StartTime { get; set; }
         public TimeSpan? EndTime { get; set; }
 
+        public TypeOfClass TypeOfClass { get; set; }
 
+
+        public int cellNumber { get; set; }
         public string? Description { get; set; }
 
         public Guid GroupId { get; set; }

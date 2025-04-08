@@ -49,6 +49,13 @@ namespace LMS
             builder.Services.AddScoped<ILecturerService, LecturerService>();
             builder.Services.AddScoped<ILecturerRepository, LecturerRepository>();
 
+
+            builder.Services.AddScoped<IScheduleService, ScheduleService>();
+            builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            builder.Services.AddScoped<IScheduleDetailService, ScheduleDetailService>();
+            builder.Services.AddScoped<IScheduleDetailRepository, ScheduleDetailRepository>();
+            builder.Services.AddScoped<IHolidayService, HolidayService>();
+            builder.Services.AddScoped<IHolidayRepository, HolidayRepository>();
             // JWT Authentication Configuration (if needed)
             //builder.Services.AddAuthentication(options =>
             //{
@@ -82,6 +89,13 @@ namespace LMS
                           .AllowAnyMethod();
                 });
             });
+
+            builder.Services.AddControllers()
+    .AddJsonOptions(x =>
+    {
+        x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+    });
+
 
             var app = builder.Build();
 

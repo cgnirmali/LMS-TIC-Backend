@@ -2,8 +2,7 @@
 {
     public enum TypeOfClass
     {
-
-        Lab  = 0,
-       Session = 1
+        Lab = 0,
+        Session = 1
     }
 }

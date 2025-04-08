@@ -22,7 +22,9 @@ namespace LMS.Services.Implementation
                 Id = Guid.NewGuid(),
                 CreatedDate = DateTime.UtcNow,
                 Name = request.Name,
-                Description = request.Description
+                Description = request.Description,
+                CourseId = request.CourseId
+
             };
 
             var createdSubject = await _subjectRepository.AddSubjectAsync(subject);
@@ -32,7 +34,8 @@ namespace LMS.Services.Implementation
                 Id = createdSubject.Id,
                 CreatedDate = createdSubject.CreatedDate,
                 Name = createdSubject.Name,
-                Description = createdSubject.Description
+                Description = createdSubject.Description,
+                CourseId = createdSubject.CourseId  
             };
         }
 
@@ -46,7 +49,8 @@ namespace LMS.Services.Implementation
                 Id = subject.Id,
                 CreatedDate = subject.CreatedDate,
                 Name = subject.Name,
-                Description = subject.Description
+                Description = subject.Description,
+                CourseId = subject.CourseId
             }).ToList();
         }
 
@@ -60,7 +64,8 @@ namespace LMS.Services.Implementation
                 Id = subject.Id,
                 CreatedDate = subject.CreatedDate,
                 Name = subject.Name,
-                Description = subject.Description
+                Description = subject.Description,
+                CourseId = subject.CourseId
             };
         }
 
@@ -72,7 +77,8 @@ namespace LMS.Services.Implementation
                 Id = s.Id,
                 CreatedDate = s.CreatedDate,
                 Name = s.Name,
-                Description = s.Description
+                Description = s.Description,
+                CourseId = s.CourseId
             });
         }
 
@@ -91,7 +97,8 @@ namespace LMS.Services.Implementation
                 Id = updatedSubject.Id,
                 CreatedDate = updatedSubject.CreatedDate,
                 Name = updatedSubject.Name,
-                Description = updatedSubject.Description
+                Description = updatedSubject.Description,
+                CourseId= updatedSubject.CourseId
             };
         }
 

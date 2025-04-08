@@ -12,9 +12,7 @@ namespace LMS.DB.Entities
 
         public ClassSchedule ClassSchedule { get; set; }
 
-
+        public ICollection<ScheduleDetail> ScheduleDetail { get; set; }
         public Holiday Holiday { get; set; }
-
-        public ScheduleDetail ScheduleDetail { get; set; }
     }
 }

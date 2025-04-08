@@ -1,7 +1,10 @@
-﻿namespace LMS.DB.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LMS.DB.Entities
 {
     public class Holiday
     {
+        [Key]
         public Guid Id { get; set; }
 
         public string holiday { get; set; }

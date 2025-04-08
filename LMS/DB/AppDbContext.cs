@@ -17,6 +17,12 @@ namespace LMS.DB
 
         //users tables
         public DbSet<Student> Students { get; set; }
+
+        public DbSet<Schedule> Schedules { get; set; }
+
+        public DbSet<ScheduleDetail> ScheduleDetails { get; set; }
+        public DbSet<Holiday> Holiday { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Student>()
@@ -47,7 +53,7 @@ namespace LMS.DB
 
         //Time Table
         public DbSet<Attendance> Attendances { get; set; }
-        public DbSet<Schedule> Schedules { get; set; }
+       
        
 
         //Quiz Exam
