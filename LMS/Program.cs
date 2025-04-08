@@ -49,6 +49,10 @@ namespace LMS
             builder.Services.AddScoped<ILecturerService, LecturerService>();
             builder.Services.AddScoped<ILecturerRepository, LecturerRepository>();
 
+            // Register Notification services
+            builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+            builder.Services.AddScoped<INotifictionService, NotificationService>();
+
             // JWT Authentication Configuration (if needed)
             //builder.Services.AddAuthentication(options =>
             //{

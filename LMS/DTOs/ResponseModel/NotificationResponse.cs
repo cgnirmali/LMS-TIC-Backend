@@ -1,14 +1,16 @@
 ﻿using LMS.Assets.Enums;
 
-namespace LMS.DB.Entities
+namespace LMS.DTOs.ResponseModel
 {
-    public class Notification
+    public class NotificationResponse
     {
         public Guid Id { get; set; }
         public DateTime CreatedDate { get; set; }
-        public Guid ReceiverId { get; set; }
-        public string Message { get; set; }
-        public NotificationType NotificationType { get; set; }
 
+        public Guid ReceiverId { get; set; }
+
+        public string Message { get; set; }
+
+        public NotificationType NotificationType { get; set; }
     }
 }
