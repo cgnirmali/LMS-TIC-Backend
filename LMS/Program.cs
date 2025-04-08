@@ -50,12 +50,19 @@ namespace LMS
             builder.Services.AddScoped<ILecturerRepository, LecturerRepository>();
 
 
+
             builder.Services.AddScoped<IScheduleService, ScheduleService>();
             builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
             builder.Services.AddScoped<IScheduleDetailService, ScheduleDetailService>();
             builder.Services.AddScoped<IScheduleDetailRepository, ScheduleDetailRepository>();
             builder.Services.AddScoped<IHolidayService, HolidayService>();
             builder.Services.AddScoped<IHolidayRepository, HolidayRepository>();
+
+            
+            builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+            builder.Services.AddScoped<INotifictionService, NotificationService>();
+
+
             // JWT Authentication Configuration (if needed)
             //builder.Services.AddAuthentication(options =>
             //{
