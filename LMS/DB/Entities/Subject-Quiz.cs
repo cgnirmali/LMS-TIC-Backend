@@ -2,6 +2,7 @@
 {
     public class Subject_Quiz
     {
+        public Guid Id { get; set; }
         public Guid SubjectId { get; set; }
         public Subject Subject { get; set; }
         public Guid QuizExamId {  get; set; }
