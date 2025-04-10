@@ -16,7 +16,8 @@
 
         public ICollection<Questions> Questions { get; set; }
 
-        public ICollection<Material> Materials { get; set; }    
+        public ICollection<Material> Materials { get; set; }
+        public ICollection<Subject_Quiz> SubjectQuizzes { get; set; }
 
     }
 }

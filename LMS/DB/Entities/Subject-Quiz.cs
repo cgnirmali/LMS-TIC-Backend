@@ -7,5 +7,9 @@
         public Subject Subject { get; set; }
         public Guid QuizExamId {  get; set; }
         public QuizExam QuizExam { get; set; }
+
+        //navigation property
+        public ICollection<Subject_quiz_question> SubjectsQuizQuestions { get; set; }
+    
     }
 }

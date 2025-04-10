@@ -23,15 +23,7 @@ namespace LMS.DB
         public DbSet<ScheduleDetail> ScheduleDetails { get; set; }
         public DbSet<Holiday> Holiday { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Student>()
-     .HasOne(s => s.User)
-     .WithMany()
-     .HasForeignKey(s => s.UserId)
-     .OnDelete(DeleteBehavior.Cascade);
-
-        }
+      
 
         public DbSet<Lecturer> Lecturers { get; set; }
         public DbSet<Staff> Staffs { get; set; }
@@ -57,8 +49,27 @@ namespace LMS.DB
        
 
         //Quiz Exam
+        public DbSet<Subject_Quiz> Subjects_Quizes { get; set; }    
+        public DbSet<Subject_quiz_question> Subjects_quiz_questions { get; set; }
+        public DbSet<QuizExam> QuizExams { get; set; }
+        public DbSet<Questions> Questionses { get; set; }
+        public DbSet<Option> Options { get; set; }
+        public DbSet<StudentAttempts> StudentAttemptses { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Student>()
+     .HasOne(s => s.User)
+     .WithMany()
+     .HasForeignKey(s => s.UserId)
+     .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Subject_quiz_question>()
+        .HasOne(sqq => sqq.Subject_Quiz)
+        .WithMany(sq => sq.SubjectsQuizQuestions)
+        .HasForeignKey(sqq => sqq.Subject_QuizId)
+        .OnDelete(DeleteBehavior.Restrict);
 
+        }
     }
 }

@@ -11,6 +11,8 @@
         //navigation property
         public ICollection<Subject> Subjects { get; set; } 
         public ICollection<StudentAttempts> StudentAttempts { get; set; }
+        public ICollection<Subject_Quiz> SubjectQuizzes { get; set; }
+        public ICollection<Subject_quiz_question> SubjectQuizQuestions { get; set; }
 
     }
 }
