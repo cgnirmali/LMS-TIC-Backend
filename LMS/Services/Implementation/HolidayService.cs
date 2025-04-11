@@ -37,6 +37,13 @@ namespace LMS.Services.Implementation
             await _holidayRepository.AddHolidayAsync(holidaydetail);
             return holidaydetail;
         }
+    
+
+        public async Task<Holiday> getHolidayById(Guid Id)
+        {
+            var response = await _holidayRepository.getHolidayById(Id);
+            return response;
+        }
 
 
 

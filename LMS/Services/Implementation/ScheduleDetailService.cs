@@ -60,10 +60,10 @@ namespace LMS.Services.Implementation
 
 
             response.StartTime = TimeSpan.Parse(request.StartTime);
+            response.EndTime = TimeSpan.Parse(request.EndTime);
             response.cellNumber = request.cellNumber;
             response.TypeOfClass = request.TypeOfClass;
             response.Description = request.Description;
-            response.cellNumber = request.cellNumber;
             response.GroupId = request.GroupId;
 
             await _scheduleDetailRepository.UpdateScheduleDetailAsync(response);
@@ -71,6 +71,23 @@ namespace LMS.Services.Implementation
             return response;
 
 
+        }
+
+        public async Task<ScheduleDetail> getscheduledetailbyId( Guid ScheduleDetailsId)
+        {
+            var response = await _scheduleDetailRepository.getSheduleDetailByIdAsync(ScheduleDetailsId);
+
+            var data = new ScheduleDetail
+            {
+                StartTime = response.StartTime,
+                EndTime = response.EndTime,
+                TypeOfClass = response.TypeOfClass,
+                Description = response.Description,
+                cellNumber = response.cellNumber,
+                GroupId = response.GroupId
+            };
+
+            return data;
         }
     }
 }

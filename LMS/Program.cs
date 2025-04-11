@@ -101,7 +101,7 @@ namespace LMS
     .AddJsonOptions(x =>
     {
         x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-    });
+    });   
 
 
             var app = builder.Build();

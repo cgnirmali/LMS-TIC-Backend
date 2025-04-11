@@ -7,7 +7,7 @@ namespace LMS.Services.Interfaces
     public interface IScheduleDetailService
     {
         Task<ScheduleDetail> CreateScheduleAsync(ScheduleDetailRequestDto request);
-
+        Task<ScheduleDetail> getscheduledetailbyId(Guid ScheduleDetailsId);
         Task<ScheduleDetail> UpdateScheduleDetailAsync(Guid ScheduleDetailsId, UpdateScheduleDetailRequestDto request);
     }
 }

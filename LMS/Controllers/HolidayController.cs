@@ -45,5 +45,13 @@ namespace LMS.Controllers
             var data = await _holidayService.UpdateHolidayAsync(Id, request);
             return Ok(data);
         }
+
+        [HttpGet("{Id}")]
+
+        public async Task<IActionResult> getHolidayById(Guid Id)
+        {
+            var data = await _holidayService.getHolidayById(Id);
+            return Ok(data);
+        }
     }
 }

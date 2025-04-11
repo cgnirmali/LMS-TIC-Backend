@@ -56,6 +56,7 @@ namespace LMS.Repositories.Implementation
 
                     HolidayDetail = schedule.Holiday != null ? new HolidayDetailResponseDto
                     {
+                        HolidayId = schedule.Holiday.Id,
                         HolidayName = schedule.Holiday.holiday
                     } : null
                 }).ToListAsync();

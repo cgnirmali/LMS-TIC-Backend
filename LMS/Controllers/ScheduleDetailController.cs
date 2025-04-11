@@ -40,8 +40,17 @@ namespace LMS.Controllers
         [HttpPut("{ScheduleDetailsId}")]
         public async Task<IActionResult> UpdateScheduleDetail(Guid ScheduleDetailsId, UpdateScheduleDetailRequestDto request)
         {
-           var data = await _scheduleDetailService.UpdateScheduleDetailAsync(ScheduleDetailsId, request);
-            return Ok(data) ;
+            var data = await _scheduleDetailService.UpdateScheduleDetailAsync(ScheduleDetailsId, request);
+            return Ok(data);
+        }
+
+        [HttpGet("{ScheduleDetailsId}")]
+      
+        public async Task<IActionResult> getScheduleDetailById(Guid ScheduleDetailsId)
+        {
+
+            var data = await _scheduleDetailService.getscheduledetailbyId(ScheduleDetailsId);
+            return Ok(data);
         }
     }
 }
