@@ -10,5 +10,7 @@
 
         //navigation property
         public  Course Course{ get; set; }
+
+        public ICollection<Student> Student { get; set; }
     }
 }

@@ -70,6 +70,23 @@ namespace LMS.DB
         .HasForeignKey(sqq => sqq.Subject_QuizId)
         .OnDelete(DeleteBehavior.Restrict);
 
+       
+
+            
+            modelBuilder.Entity<AssesmentSubmission>()
+                .HasOne(a => a.Student)
+                .WithMany(s => s.Assesmentsubmission)
+                .HasForeignKey(a => a.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+          
+
+            modelBuilder.Entity<StudentAttempts>()
+                .HasOne(a => a.Student)
+                .WithMany(s => s.StudentAttempts)
+                .HasForeignKey(a => a.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
+
     }
 }

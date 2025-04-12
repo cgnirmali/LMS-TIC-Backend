@@ -16,6 +16,8 @@ namespace LMS.DB.Entities
         [Required]
         public string NIC { get; set; }
 
+        public string UserEmail { get; set; }
+
 
         [Required]
         public string? Address { get; set; }

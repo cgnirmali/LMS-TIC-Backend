@@ -45,6 +45,7 @@ namespace LMS.Services.Implementation
                 student.LastName = studentRequest.LastName;
                 student.UTNumber = studentRequest.UTNumber;
                 student.Gender = studentRequest.Gender;
+                student.GroupId = studentRequest.GroupId;
                 student.NIC = studentRequest.NIC;
                 student.Address = studentRequest.Address;
                 student.PhoneNumber = studentRequest.PhoneNumber;           
@@ -80,9 +81,9 @@ namespace LMS.Services.Implementation
 
         //djukvfhawi
 
-        public async Task<bool> UpdateStudentAsync(Guid studentId, Student updatedStudent, string? newPassword, string? UTEmail)
+        public async Task<bool> UpdateStudentAsync(Guid studentId, UpdatedStudentDto updatedStudent)
         {
-            return await _studentRepository.UpdateStudentAsync(studentId, updatedStudent, newPassword,UTEmail);
+            return await _studentRepository.UpdateStudentAsync(studentId, updatedStudent);
         }
 
 
@@ -91,13 +92,13 @@ namespace LMS.Services.Implementation
             return await _studentRepository.DeleteStudent(id);
         }
 
-        public async Task<Student?> GetStudentByIdAsync(Guid studentId)
+        public async Task<StudentGroupDto?> GetStudentByIdAsync(Guid studentId)
         {
             return await _studentRepository.GetStudentByIdAsync(studentId);
         }
-        public async Task<ICollection<Student>> GetAllStudents()
+        public async Task<List<StudentGroupDto>> GetAllStudents()
         { 
-        var data = await _studentRepository.GetAllStudents();
+            var data = await _studentRepository.GetAllStudents();
             return data;
         }
 

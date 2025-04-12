@@ -8,11 +8,11 @@ namespace LMS.Repositories.Interfaces
     {
         Task AddNewStudent(Student student);
         Task<Student> GetStudentByEmail(string email);
-        Task<Student?> GetStudentByIdAsync(Guid studentId);
-        Task<Student> GetStudentById(Guid id);
+        Task<StudentGroupDto> GetStudentByIdAsync(Guid studentId);
+     
         Task<bool> DeleteStudent(Guid studentId);
         //Task VerifyRegister(Guid id);
-        Task<bool> UpdateStudentAsync(Guid studentId, Student updatedStudent, string? newPassword ,string?UTEmail);
-        Task<ICollection<Student>> GetAllStudents();
+        Task<bool> UpdateStudentAsync(Guid studentId, UpdatedStudentDto updatedStudent);
+        Task<List<StudentGroupDto>> GetAllStudents();
     }
 }

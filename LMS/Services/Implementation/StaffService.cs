@@ -28,13 +28,12 @@ namespace LMS.Services.Implementation
             _configuration = configuration;
         }
 
-        public async Task<string> AddStaff(StaffRequest staffRequest, UserStaff_LectureRequest userStaff_LectureRequest)
+        public async Task<string> AddStaff(StaffRequest staffRequest)
         {
             if (string.IsNullOrWhiteSpace(staffRequest.Address))
                 throw new ArgumentException("Address cannot be null or empty");
 
-            if (string.IsNullOrEmpty(userStaff_LectureRequest.Email))
-                throw new ArgumentException("Email cannot be null or empty");
+           
 
             string randomPassword = GenerateRandomString(6);
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(randomPassword);
@@ -42,18 +41,19 @@ namespace LMS.Services.Implementation
             var user = new User
             {
                 Id = Guid.NewGuid(),
-                UTEmail = userStaff_LectureRequest.Email,
+                UTEmail = staffRequest.UTEmail,
                 Password = hashedPassword,
                 role = Assets.Enums.Role.Staff,
                 CreatedDate = DateTime.UtcNow
             };
 
             await _staffRepository.AddStaffUser(user);
-            await _emailService.SendEmailtoLoginAsync(user.UTEmail, "Your Account Credentials", $"Your password: {randomPassword}");
+            await _emailService.SendEmailtoLoginAsync(staffRequest.UserEmail, "Your Account Credentials", $"Your password: {randomPassword} Your UTEmail: {staffRequest.UTEmail} Your  UTEmail password: {staffRequest.UTPassword}");
 
             var staff = new Staff
             {
                 Id = Guid.NewGuid(),
+                UserEmail = staffRequest.UserEmail,
                 Name = staffRequest.Name,
                 PhoneNumber = staffRequest.PhoneNumber,
                 NIC = staffRequest.NIC,
@@ -73,7 +73,8 @@ namespace LMS.Services.Implementation
             {
                 Id = s.Id,
                 Name = s.Name,
-                Email = s.User.UTEmail,
+                UTEmail = s.User.UTEmail,
+                UserEmail = s.UserEmail,
                 PhoneNumber = s.PhoneNumber,
                 NIC = s.NIC,
                 Address = s.Address
@@ -89,14 +90,15 @@ namespace LMS.Services.Implementation
             {
                 Id = staff.Id,
                 Name = staff.Name,
-                Email = staff.User.UTEmail,
+                UTEmail = staff.User.UTEmail,
+                UserEmail = staff.UserEmail,
                 PhoneNumber = staff.PhoneNumber,
                 NIC = staff.NIC,
                 Address = staff.Address
             };
         }
 
-        public async Task UpdateStaff(Guid id, StaffRequest staffRequest)
+        public async Task UpdateStaff(Guid id, UpdateStaffRequest staffRequest)
         {
             var staff = await _staffRepository.GetStaffById(id);
             if (staff == null) throw new Exception("Staff not found");
@@ -105,6 +107,7 @@ namespace LMS.Services.Implementation
             staff.PhoneNumber = staffRequest.PhoneNumber;
             staff.NIC = staffRequest.NIC;
             staff.Address = staffRequest.Address;
+            staff.UserEmail = staffRequest.UserEmail;
 
             await _staffRepository.UpdateStaff(staff);
         }
