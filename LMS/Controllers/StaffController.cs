@@ -17,13 +17,13 @@ namespace LMS.Controllers
             _staffService = staffService;
         }
 
-        // Add Staff
+      
         [HttpPost("Add_Staff")]
-        public async Task<IActionResult> AddStaff([FromBody] StaffRequest staffRequest, [FromQuery] UserStaff_LectureRequest userStaff_LectureRequest)
+        public async Task<IActionResult> AddStaff( StaffRequest staffRequest)
         {
             try
             {
-                string token = await _staffService.AddStaff(staffRequest, userStaff_LectureRequest);
+                string token = await _staffService.AddStaff(staffRequest);
                 return Ok(new
                 {
                     status = "success",
@@ -37,7 +37,7 @@ namespace LMS.Controllers
             }
         }
 
-        // Get All Staff
+  
         [HttpGet("Get_All_Staff")]
         public async Task<IActionResult> GetAllStaff()
         {
@@ -52,7 +52,7 @@ namespace LMS.Controllers
             }
         }
 
-        // Get Staff By ID
+    
         [HttpGet("Get_Staff/{id}")]
         public async Task<IActionResult> GetStaffById(Guid id)
         {
@@ -70,9 +70,8 @@ namespace LMS.Controllers
             }
         }
 
-        // Update Staff
         [HttpPut("Update_Staff/{id}")]
-        public async Task<IActionResult> UpdateStaff(Guid id, [FromBody] StaffRequest staffRequest)
+        public async Task<IActionResult> UpdateStaff(Guid id, [FromBody] UpdateStaffRequest staffRequest)
         {
             try
             {
@@ -85,7 +84,7 @@ namespace LMS.Controllers
             }
         }
 
-        // Delete Staff (Soft Delete)
+      
         [HttpDelete("Delete_Staff/{id}")]
         public async Task<IActionResult> DeleteStaff(Guid id)
         {

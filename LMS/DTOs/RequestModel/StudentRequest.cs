@@ -14,10 +14,12 @@ namespace LMS.DTOs.RequestModel
 
         public string UTPassword { get; set; }
 
-        public Status status { get; set; } 
+        public Status status { get; set; }
         //public string Password { get; set; }
         //public string ConfirmPassword { get; set; }
 
+
+        public Guid GroupId { get; set; }
         public string PhoneNumber { get; set; }
 
         public string UTNumber { get; set; }

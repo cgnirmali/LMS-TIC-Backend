@@ -46,26 +46,27 @@ namespace LMS.Controllers
         }
 
         [HttpPut("Update-Student/{studentId}")]
-        public async Task<IActionResult> UpdateStudent(Guid studentId, [FromBody] UpdateStudentDto request)
+        public async Task<IActionResult> UpdateStudent(Guid studentId, [FromBody] UpdatedStudentDto request)
         {
             if (request == null)
             {
                 return BadRequest("Invalid request data.");
             }
 
-            var updatedStudent = new Student
-            {
-                UTNumber = request.UTNumber,
-                NIC = request.NIC,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                UserEmail = request.UserEmail,
-                PhoneNumber = request.PhoneNumber,
-                Gender = request.Gender,
-                Address = request.Address
-            };
+            //var updatedStudent = new Student
+            //{
+            //    UTNumber = request.UTNumber,
+            //    NIC = request.NIC,
+            //    FirstName = request.FirstName,
+            //    LastName = request.LastName,
+            //    UserEmail = request.UserEmail,
+            //    GroupId = request.GroupId,
+            //    PhoneNumber = request.PhoneNumber,
+            //    Gender = request.Gender,
+            //    Address = request.Address
+            //};
 
-            bool isUpdated = await _studentService.UpdateStudentAsync(studentId, updatedStudent, request.NewPassword, request.UTEmail);
+            bool isUpdated = await _studentService.UpdateStudentAsync(studentId, request);
 
             if (isUpdated)
             {

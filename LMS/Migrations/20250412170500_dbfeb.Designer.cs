@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250406051633_fi")]
-    partial class fi
+    [Migration("20250412170500_dbfeb")]
+    partial class dbfeb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,14 +107,9 @@ namespace LMS.Migrations
                     b.Property<Guid>("FingerReaderTableFingerReaderID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("StudentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("AttendanceId");
 
                     b.HasIndex("FingerReaderTableFingerReaderID");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("Attendances");
                 });
@@ -243,8 +238,7 @@ namespace LMS.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NIC")
@@ -282,6 +276,9 @@ namespace LMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -299,6 +296,8 @@ namespace LMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Materials");
                 });
@@ -360,6 +359,58 @@ namespace LMS.Migrations
                     b.ToTable("OTPs");
                 });
 
+            modelBuilder.Entity("LMS.DB.Entities.Option", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Options")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("QuestionsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionsId");
+
+                    b.ToTable("Options");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.Questions", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Questionses");
+                });
+
             modelBuilder.Entity("LMS.DB.Entities.QuizExam", b =>
                 {
                     b.Property<Guid>("Id")
@@ -376,9 +427,13 @@ namespace LMS.Migrations
                     b.Property<DateTime>("Duration")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("QuizExam");
+                    b.ToTable("QuizExams");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Schedule", b =>
@@ -419,14 +474,19 @@ namespace LMS.Migrations
                     b.Property<TimeSpan?>("StartTime")
                         .HasColumnType("time");
 
+                    b.Property<int>("TypeOfClass")
+                        .HasColumnType("int");
+
+                    b.Property<int>("cellNumber")
+                        .HasColumnType("int");
+
                     b.HasKey("ScheduleDetailsId");
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("ScheduleId")
-                        .IsUnique();
+                    b.HasIndex("ScheduleId");
 
-                    b.ToTable("ScheduleDetail");
+                    b.ToTable("ScheduleDetails");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Staff", b =>
@@ -487,6 +547,9 @@ namespace LMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -515,9 +578,47 @@ namespace LMS.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GroupId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.StudentAttempts", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("QuizExamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizExamId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentAttemptses");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Subject", b =>
@@ -545,6 +646,56 @@ namespace LMS.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.Subject_Quiz", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("QuizExamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizExamId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Subjects_Quizes");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.Subject_quiz_question", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("QuestionsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("QuizExamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("Subject_QuizId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionsId");
+
+                    b.HasIndex("QuizExamId");
+
+                    b.HasIndex("Subject_QuizId");
+
+                    b.ToTable("Subjects_quiz_questions");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.User", b =>
@@ -608,7 +759,7 @@ namespace LMS.Migrations
                     b.HasOne("LMS.DB.Entities.Student", "Student")
                         .WithMany("Assesmentsubmission")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Assesment");
@@ -623,10 +774,6 @@ namespace LMS.Migrations
                         .HasForeignKey("FingerReaderTableFingerReaderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("LMS.DB.Entities.Student", null)
-                        .WithMany("Attendance")
-                        .HasForeignKey("StudentId");
 
                     b.Navigation("FingerReaderTable");
                 });
@@ -686,6 +833,17 @@ namespace LMS.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("LMS.DB.Entities.Material", b =>
+                {
+                    b.HasOne("LMS.DB.Entities.Subject", "Subject")
+                        .WithMany("Materials")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("LMS.DB.Entities.OTP", b =>
                 {
                     b.HasOne("LMS.DB.Entities.User", "User")
@@ -697,6 +855,28 @@ namespace LMS.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("LMS.DB.Entities.Option", b =>
+                {
+                    b.HasOne("LMS.DB.Entities.Questions", "Questions")
+                        .WithMany("Options")
+                        .HasForeignKey("QuestionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.Questions", b =>
+                {
+                    b.HasOne("LMS.DB.Entities.Subject", "Subject")
+                        .WithMany("Questions")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("LMS.DB.Entities.ScheduleDetail", b =>
                 {
                     b.HasOne("LMS.DB.Entities.Group", "Group")
@@ -706,8 +886,8 @@ namespace LMS.Migrations
                         .IsRequired();
 
                     b.HasOne("LMS.DB.Entities.Schedule", "Schedule")
-                        .WithOne("ScheduleDetail")
-                        .HasForeignKey("LMS.DB.Entities.ScheduleDetail", "ScheduleId")
+                        .WithMany("ScheduleDetail")
+                        .HasForeignKey("ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -729,13 +909,40 @@ namespace LMS.Migrations
 
             modelBuilder.Entity("LMS.DB.Entities.Student", b =>
                 {
+                    b.HasOne("LMS.DB.Entities.Group", "Group")
+                        .WithMany("Student")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LMS.DB.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Group");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.StudentAttempts", b =>
+                {
+                    b.HasOne("LMS.DB.Entities.QuizExam", "QuizExam")
+                        .WithMany("StudentAttempts")
+                        .HasForeignKey("QuizExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS.DB.Entities.Student", "Student")
+                        .WithMany("StudentAttempts")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("QuizExam");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Subject", b =>
@@ -747,6 +954,48 @@ namespace LMS.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.Subject_Quiz", b =>
+                {
+                    b.HasOne("LMS.DB.Entities.QuizExam", "QuizExam")
+                        .WithMany("SubjectQuizzes")
+                        .HasForeignKey("QuizExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS.DB.Entities.Subject", "Subject")
+                        .WithMany("SubjectQuizzes")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuizExam");
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.Subject_quiz_question", b =>
+                {
+                    b.HasOne("LMS.DB.Entities.Questions", "Questions")
+                        .WithMany()
+                        .HasForeignKey("QuestionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS.DB.Entities.QuizExam", null)
+                        .WithMany("SubjectQuizQuestions")
+                        .HasForeignKey("QuizExamId");
+
+                    b.HasOne("LMS.DB.Entities.Subject_Quiz", "Subject_Quiz")
+                        .WithMany("SubjectsQuizQuestions")
+                        .HasForeignKey("Subject_QuizId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Questions");
+
+                    b.Navigation("Subject_Quiz");
                 });
 
             modelBuilder.Entity("QuizExamSubject", b =>
@@ -776,25 +1025,54 @@ namespace LMS.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("LMS.DB.Entities.Group", b =>
+                {
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.Questions", b =>
+                {
+                    b.Navigation("Options");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.QuizExam", b =>
+                {
+                    b.Navigation("StudentAttempts");
+
+                    b.Navigation("SubjectQuizQuestions");
+
+                    b.Navigation("SubjectQuizzes");
+                });
+
             modelBuilder.Entity("LMS.DB.Entities.Schedule", b =>
                 {
                     b.Navigation("Holiday")
                         .IsRequired();
 
-                    b.Navigation("ScheduleDetail")
-                        .IsRequired();
+                    b.Navigation("ScheduleDetail");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Student", b =>
                 {
                     b.Navigation("Assesmentsubmission");
 
-                    b.Navigation("Attendance");
+                    b.Navigation("StudentAttempts");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.Subject", b =>
                 {
                     b.Navigation("Assesment");
+
+                    b.Navigation("Materials");
+
+                    b.Navigation("Questions");
+
+                    b.Navigation("SubjectQuizzes");
+                });
+
+            modelBuilder.Entity("LMS.DB.Entities.Subject_Quiz", b =>
+                {
+                    b.Navigation("SubjectsQuizQuestions");
                 });
 
             modelBuilder.Entity("LMS.DB.Entities.User", b =>

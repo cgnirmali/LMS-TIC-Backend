@@ -6,11 +6,11 @@ namespace LMS.Services.Interfaces
 {
     public interface IStudentService
     {
-        Task<ICollection<Student>> GetAllStudents();
+        Task<List<StudentGroupDto>> GetAllStudents();
         Task<Student> GetStudentByEmail(string email);
         Task<Info> AddNewStudent(StudentRequest studentRequest);
-        Task<Student?> GetStudentByIdAsync(Guid studentId);
-        Task<bool> UpdateStudentAsync(Guid studentId, Student updatedStudent, string? newPassword, string? UTEmail);
+        Task<StudentGroupDto?> GetStudentByIdAsync(Guid studentId);
+        Task<bool> UpdateStudentAsync(Guid studentId, UpdatedStudentDto updatedStudent);
         Task<bool> DeleteStudent(Guid id);
     }
 }
