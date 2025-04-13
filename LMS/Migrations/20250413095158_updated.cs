@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LMS.Migrations
 {
     /// <inheritdoc />
-    public partial class dbfeb : Migration
+    public partial class updated : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,7 +47,7 @@ namespace LMS.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Duration = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DurationInHours = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -176,6 +176,7 @@ namespace LMS.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NIC = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -455,7 +456,7 @@ namespace LMS.Migrations
                         column: x => x.QuizExamId,
                         principalTable: "QuizExams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentAttemptses_Students_StudentId",
                         column: x => x.StudentId,
@@ -502,15 +503,14 @@ namespace LMS.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Options = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsCorrect = table.Column<bool>(type: "bit", nullable: false),
-                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Options", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Options_Questionses_QuestionsId",
-                        column: x => x.QuestionsId,
+                        name: "FK_Options_Questionses_QuestionId",
+                        column: x => x.QuestionId,
                         principalTable: "Questionses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -523,15 +523,14 @@ namespace LMS.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Subject_QuizId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     QuizExamId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Subjects_quiz_questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Subjects_quiz_questions_Questionses_QuestionsId",
-                        column: x => x.QuestionsId,
+                        name: "FK_Subjects_quiz_questions_Questionses_QuestionId",
+                        column: x => x.QuestionId,
                         principalTable: "Questionses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -620,9 +619,9 @@ namespace LMS.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Options_QuestionsId",
+                name: "IX_Options_QuestionId",
                 table: "Options",
-                column: "QuestionsId");
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OTPs_UserId",
@@ -680,9 +679,9 @@ namespace LMS.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subjects_quiz_questions_QuestionsId",
+                name: "IX_Subjects_quiz_questions_QuestionId",
                 table: "Subjects_quiz_questions",
-                column: "QuestionsId");
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subjects_quiz_questions_QuizExamId",
