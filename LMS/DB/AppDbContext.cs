@@ -74,7 +74,7 @@ namespace LMS.DB
 
             
             modelBuilder.Entity<AssesmentSubmission>()
-                .HasOne(a => a.Student)
+                .HasOne(a => a.Students)
                 .WithMany(s => s.Assesmentsubmission)
                 .HasForeignKey(a => a.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -85,6 +85,12 @@ namespace LMS.DB
                 .HasOne(a => a.Students)
                 .WithMany(s => s.StudentAttempts)
                 .HasForeignKey(a => a.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<StudentAttempts>()
+                .HasOne(sa => sa.QuizExams)
+                .WithMany(q => q.StudentAttempts)
+                .HasForeignKey(sa => sa.QuizExamId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 

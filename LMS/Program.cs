@@ -74,6 +74,9 @@ namespace LMS
             builder.Services.AddScoped<IQuestionService, QuestionService>();
             builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 
+            builder.Services.AddScoped<IStudentAttemptService, StudentAttemptService>();
+            builder.Services.AddScoped<IStudentAttemptRepository, StudentAttemptRepository>();
+
             // JWT Authentication Configuration (if needed)
             //builder.Services.AddAuthentication(options =>
             //{

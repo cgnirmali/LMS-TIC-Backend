@@ -16,7 +16,7 @@ namespace LMS.DB.Entities
         public Guid AssesmentId { get; set; }
 
         //navigation 
-        public Student Student { get; set; }
+        public Student Students { get; set; }
         public Assesment Assesment { get; set; }
 
 
