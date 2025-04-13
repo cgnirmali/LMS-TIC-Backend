@@ -63,6 +63,17 @@ namespace LMS
             builder.Services.AddScoped<INotifictionService, NotificationService>();
 
 
+
+
+
+            //QuizApp
+            builder.Services.AddScoped<IQuizExamRepository, QuizExamRepository>();
+            builder.Services.AddScoped<IQuizExamService, QuizExamService>();
+             
+            builder.Services.AddScoped<IOptionRepository, OptionRepository>();
+            builder.Services.AddScoped<IQuestionService, QuestionService>();
+            builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+
             // JWT Authentication Configuration (if needed)
             //builder.Services.AddAuthentication(options =>
             //{
