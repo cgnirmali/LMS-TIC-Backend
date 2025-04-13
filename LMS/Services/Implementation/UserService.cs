@@ -43,27 +43,32 @@ namespace LMS.Services.Implementation
             _studentRepository = studentRepository;
         }
 
-        public async Task<(TokenModel token, User user)> Authenticate(string email, string password)
+        public async Task<(TokenModel token, User user)> login(string email, string password)
         {
             var user = await _userRepository.GetUserByEmailAsync(email);
-            if (user == null)
-            {
-                throw new Exception("User Not Found");
-            }
+           
             // bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Passssword);
 
-           // bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+            // bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
 
+            if (user == null) throw new Exception("User not found.");
+            if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
+                throw new Exception("Incorrect password.");
 
-            if (user.Password != password)
-                throw new Exception("Password Not Match");
+            //return CreateToken(user);
+            //if (user.Password != password)
+            //    throw new Exception("Password Not Match");
 
-            var role = user.role.ToString();
+            //var role = user.role.ToString();
 
             var token = CreateToken(user);
 
             return (token, user);
         }
+
+
+
+      
 
 
         public string GenerateOtp()
@@ -102,8 +107,7 @@ namespace LMS.Services.Implementation
         {
             var claimsList = new List<Claim>();
             claimsList.Add(new Claim("Id", user.Id.ToString()));
-            claimsList.Add(new Claim("Email", user.UTEmail));
-
+            claimsList.Add(new Claim("Email", user.UTEmail));  
             claimsList.Add(new Claim("Role", user.role.ToString()));
 
 
@@ -147,68 +151,69 @@ namespace LMS.Services.Implementation
         //}
 
 
-        //public async Task<bool> SendOtpAsync(string email)
-        //{
-        //    string otp = GenerateOtp();
-        //    var today = DateTime.Now;
-        //    var expirationTime = DateTime.UtcNow.AddMinutes(7);
+        public async Task<bool> SendOtpAsync(string email)
+        {
+      
+            string otp = GenerateOtp();
+            var today = DateTime.Now;
+            var expirationTime = DateTime.UtcNow.AddMinutes(7);
 
-        //    // Check if the user already exists
-        //    var user = await _userRepository.GetUserByEmailAsync(email);
+            // Check if the user already exists
+            var user = await _userRepository.GetUserByEmailAsync(email);
+            if (user == null) throw new Exception("User not found.");
 
-        //    if (user == null)
-        //    {
-        //        // If user does not exist, create a new one
-        //        user = new User
-        //        {
-        //            UTEmail = email,
-        //            Id = Guid.NewGuid(),
-        //            Password = null,
-        //            IsVerified = false,
-        //            role = Role.Student,
-        //            CreatedDate = today
-        //        };
+            //if (user == null)
+            //{
+            //    // If user does not exist, create a new one
+            //    user = new User
+            //    {
+            //        UTEmail = email,
+            //        Id = Guid.NewGuid(),
+            //        Password = null,
+            //        IsVerified = false,
+            //        role = Role.Student,
+            //        CreatedDate = today
+            //    };
 
-        //        await _userRepository.AddUserAsync(user);
-        //    }
-        //    else
-        //    {
-        //        // If user exists, check for existing OTP
-        //        var existingOtp = await _userRepository.GetOtpByEmailAsync(email);
+            //    await _userRepository.AddUserAsync(user);
+            //}
+            //else
+            //{
+            //    // If user exists, check for existing OTP
+            //    var existingOtp = await _userRepository.GetOtpByEmailAsync(email);
 
-        //        if (existingOtp != null && !user.IsEmailConfirmed)
-        //        {
-        //            // Remove old OTP if not verified
-        //            await _userRepository.RemoveOTP(existingOtp.Code);
+            //    if (existingOtp != null && !user.IsEmailConfirmed)
+            //    {
+            //        // Remove old OTP if not verified
+            //        await _userRepository.RemoveOTP(existingOtp.Code);
 
-        //        }
-        //    }
+            //    }
+            //}
 
-        //    // Generate new OTP and save it
-        //    var otpEntity = new OTP
-        //    {
-        //        UserEmail = email,
-        //        Code = otp,
-        //        CreatedDate = today,
-        //        EndTime = expirationTime,
-        //        User = user,
-        //        OtpType = OtpType.Registration
-        //    };
+            // Generate new OTP and save it
+            var otpEntity = new OTP
+            {
+                UserEmail = user.UTEmail,
+                Code = otp,
+                CreatedDate = today,
+                EndTime = expirationTime,
+                UserId = user.Id,
+                OtpType = OtpType.PasswordReset
+            };
 
-        //    await _userRepository.SaveOTP(otpEntity);
+            await _userRepository.SaveOTP(otpEntity);
+ 
+            // Send email
+            var updatemailRequest = new UpdateMailRequest
+            {
+                UTEmail = user.UTEmail,  
+                Otp = otp
+            };
 
-        //    // Send email
-        //    var mailRequest = new MailRequest
-        //    {
-        //        User = user,
-        //        Type = EmailType.OTP,
-        //        Otp = otp
-        //    };
+            await _sendMailService.SendEmailforUpdate(updatemailRequest);
 
-        //    await _sendMailService.SendEmail(mailRequest);
-
-        //    return true;
-        //}
+            return true;
+        }
 
 
 

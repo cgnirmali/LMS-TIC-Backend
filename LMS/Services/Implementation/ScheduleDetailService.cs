@@ -89,5 +89,14 @@ namespace LMS.Services.Implementation
 
             return data;
         }
+
+
+        public async Task<bool> DeleteScheduleDetail(Guid ScheduleDetailsId)
+        {
+            return await _scheduleDetailRepository.DeleteScheduleAsync(ScheduleDetailsId);
+        }
+
+
+
     }
 }

@@ -1,8 +1,11 @@
+using LMS.Assets.Enums;
 using LMS.DB.Entities;
 using LMS.DTOs.RequestModel;
 using LMS.DTOs.ResponseModel;
+using LMS.Repositories.Implementation;
 using LMS.Repositories.Interfaces;
 using LMS.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -20,51 +23,93 @@ namespace LMS.Services.Implementation
         private readonly IStaffRepository _staffRepository;
         private readonly EmailService _emailService;
         private readonly IConfiguration _configuration;
+        private readonly IUserRepository _userRepository;
 
-        public StaffService(IStaffRepository staffRepository, IConfiguration configuration, EmailService emailService)
+        public StaffService(IStaffRepository staffRepository, IConfiguration configuration, IUserRepository userRepository, EmailService emailService)
         {
             _staffRepository = staffRepository;
             _emailService = emailService;
             _configuration = configuration;
+            _userRepository = userRepository;
         }
+
+    
 
         public async Task<string> AddStaff(StaffRequest staffRequest)
         {
-            if (string.IsNullOrWhiteSpace(staffRequest.Address))
-                throw new ArgumentException("Address cannot be null or empty");
-
-           
-
-            string randomPassword = GenerateRandomString(6);
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(randomPassword);
-
-            var user = new User
+            var existstaff = await _staffRepository.GetStaffByEmail(staffRequest.UserEmail);
+            var user1 = await _userRepository.GetUserByEmailAsync(staffRequest.UTEmail);
+            if ((existstaff == null) && (user1 == null))
             {
-                Id = Guid.NewGuid(),
-                UTEmail = staffRequest.UTEmail,
-                Password = hashedPassword,
-                role = Assets.Enums.Role.Staff,
-                CreatedDate = DateTime.UtcNow
-            };
+                try
+                {
 
-            await _staffRepository.AddStaffUser(user);
-            await _emailService.SendEmailtoLoginAsync(staffRequest.UserEmail, "Your Account Credentials", $"Your password: {randomPassword} Your UTEmail: {staffRequest.UTEmail} Your  UTEmail password: {staffRequest.UTPassword}");
+                    if (string.IsNullOrWhiteSpace(staffRequest.Address))
+                        throw new ArgumentException("Address cannot be null or empty");
 
-            var staff = new Staff
+
+
+
+                    string randomPassword = GenerateRandomString(6);
+                    string hashedPassword = BCrypt.Net.BCrypt.HashPassword(randomPassword);
+
+                    var user = new User
+                    {
+                        Id = Guid.NewGuid(),
+                        UTEmail = staffRequest.UTEmail,
+                        Password = hashedPassword,
+                        role = Assets.Enums.Role.Staff,
+                        CreatedDate = DateTime.UtcNow
+                    };
+
+                    await _staffRepository.AddStaffUser(user);
+                    await _emailService.SendEmailtoLoginAsync(staffRequest.UserEmail, "Your Account Credentials", $"Your password: {randomPassword} Your UTEmail: {staffRequest.UTEmail} Your  UTEmail password: {staffRequest.UTPassword}");
+
+                    var staff = new Staff
+                    {
+                        Id = Guid.NewGuid(),
+                        UserEmail = staffRequest.UserEmail,
+                        Name = staffRequest.Name,
+                        PhoneNumber = staffRequest.PhoneNumber,
+                        NIC = staffRequest.NIC,
+                        Address = staffRequest.Address,
+                        UserId = user.Id,
+                        CreatedDate = DateTime.UtcNow
+                    };
+
+                    await _staffRepository.AddStaff(staff);
+                    return CreateToken(user);
+
+
+
+                }
+                catch (DbUpdateException ex)
+                {
+                    // Debug log
+                    Console.WriteLine("Database Update Exception: " + ex.Message);
+                    Console.WriteLine("Inner Exception: " + ex.InnerException?.Message);
+
+                    throw new Exception($"Error saving staff to database. Details: {ex.InnerException?.Message ?? ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    // General exception
+                    Console.WriteLine("Exception: " + ex.Message);
+
+                    throw new Exception("An unexpected error occurred while adding staff.");
+                }
+
+            }
+            else
             {
-                Id = Guid.NewGuid(),
-                UserEmail = staffRequest.UserEmail,
-                Name = staffRequest.Name,
-                PhoneNumber = staffRequest.PhoneNumber,
-                NIC = staffRequest.NIC,
-                Address = staffRequest.Address,
-                UserId = user.Id,
-                CreatedDate = DateTime.UtcNow
-            };
+                throw new Exception("Allready INsert.");
 
-            await _staffRepository.AddStaff(staff);
-            return CreateToken(user);
+            }
+
+
+
         }
+
 
         public async Task<List<StaffResponse>> GetAllStaff()
         {

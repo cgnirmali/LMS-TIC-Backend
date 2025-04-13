@@ -9,5 +9,9 @@ namespace LMS.Services.Interfaces
         Task<ScheduleDetail> CreateScheduleAsync(ScheduleDetailRequestDto request);
         Task<ScheduleDetail> getscheduledetailbyId(Guid ScheduleDetailsId);
         Task<ScheduleDetail> UpdateScheduleDetailAsync(Guid ScheduleDetailsId, UpdateScheduleDetailRequestDto request);
+
+        Task<bool> DeleteScheduleDetail(Guid ScheduleDetailsId);
+
+
     }
 }

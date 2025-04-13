@@ -1,5 +1,6 @@
 
 ﻿using LMS.DTOs.RequestModel;
+using LMS.DTOs.ResponseModel;
 using LMS.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -63,23 +64,23 @@ namespace LMS.Controllers
             return Ok(json);
         }
 
- 
 
 
 
-        //[HttpGet("Login")]
-        //public async Task<IActionResult> Login(string email , string password)
-        //{
-        //    try
-        //    {
-        //        var token = await _userService.loginUser(email, password);
-        //        return Ok(new { status = "success", message = "Login successful", token });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new { status = "error", message = ex.Message });
-        //    }
-        //}
+
+        [HttpGet("Login")]
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            try
+            {
+                var data = await _userService.login(email, password);
+                return Ok(new { status = "success", message = "Login successful", data.token });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { status = "error", message = ex.Message });
+            }
+        }
 
 
 

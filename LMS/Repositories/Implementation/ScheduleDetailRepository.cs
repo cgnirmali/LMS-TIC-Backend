@@ -1,6 +1,7 @@
 ﻿using LMS.DB.Entities;
 using LMS.DB;
 using LMS.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace LMS.Repositories.Implementation
 {
@@ -51,6 +52,21 @@ namespace LMS.Repositories.Implementation
 
             _Context.ScheduleDetails.Update(scheduledetail);
             await _Context.SaveChangesAsync();
+        }
+
+
+
+        public async Task<bool> DeleteScheduleAsync(Guid ScheduleDetailsId)
+        {
+            var scheduledetail = await _Context.ScheduleDetails.FindAsync(ScheduleDetailsId);
+            if (scheduledetail == null)
+            {
+                return false;
+            }
+
+            _Context.ScheduleDetails.Remove(scheduledetail);
+            await _Context.SaveChangesAsync();
+            return true;
         }
     }
 }
