@@ -14,10 +14,10 @@ namespace LMS.DB.Entities
         public Guid QuizExamId { get; set; }
 
         public Guid StudentId { get; set; }
-
+         
         // navigation property
-        public QuizExam QuizExam { get; set; }
-        public Student Student { get; set; }
+        public QuizExam QuizExams { get; set; }
+        public Student Students { get; set; }
 
 
     }
