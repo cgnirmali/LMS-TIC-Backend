@@ -13,5 +13,7 @@ namespace LMS.Repositories.Interfaces
         Task<Staff> GetStaffById(Guid id);
         Task UpdateStaff(Staff staff);
         Task DeleteStaff(Staff staff);
+
+        Task<Student> GetStaffByEmail(string email);
     }
 }

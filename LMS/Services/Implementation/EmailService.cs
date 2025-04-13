@@ -48,6 +48,27 @@ namespace LMS.Services.Implementation
         }
 
 
+        public async Task SendEmailforUpdate(UpdateMailRequest updatemailRequest)
+        {
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress("LMS System", _emailSettings.SenderEmail));
+            emailMessage.To.Add(new MailboxAddress("", updatemailRequest.UTEmail));
+            emailMessage.Subject = "Update Password OTP";
+
+            var bodyBuilder = new BodyBuilder
+            {
+                HtmlBody = $"Hi, your email {updatemailRequest.UTEmail} has requested a password update. Please use the OTP provided. OTP is {updatemailRequest.Otp}"
+            };
+            emailMessage.Body = bodyBuilder.ToMessageBody();
+
+            using var smtp = new SmtpClient();
+            await smtp.ConnectAsync(_emailSettings.SmtpServer, _emailSettings.SmtpPort, MailKit.Security.SecureSocketOptions.StartTls);
+            await smtp.AuthenticateAsync(_emailSettings.SenderEmail, _emailSettings.SenderPassword); // Use the App Password here
+            await smtp.SendAsync(emailMessage);
+            await smtp.DisconnectAsync(true);
+        }
+
+
         public async Task SendEmailtoLoginAsync(string toEmail, string subject, string body)
         {
             var emailMessage = new MimeMessage();
@@ -144,8 +165,8 @@ namespace LMS.Services.Implementation
             
             <p><strong>Your account details:</strong></p>
             <p class='info-box'>UT Email: {mailRequest.User.UTEmail}</p>
-            <p class='info-box'>UT Password: {mailRequest.UTPassword}</p>
-            <p class='info-box'>Password: {mailRequest.User.Password}</p>
+            <p class='info-box'>UTEmail Password: {mailRequest.UTEmailPassword}</p>
+            <p class='info-box'>UTloginPassword: {mailRequest.UTloginPassword}</p>
 
             <p>Please use these credentials to log in to your student portal.</p>
 

@@ -29,6 +29,13 @@ namespace LMS.Repositories.Implementation
             await _context.SaveChangesAsync();
         }
 
+
+        public async Task<Student> GetStaffByEmail(string email)
+        {
+            var student = await _context.Students.SingleOrDefaultAsync(d => d.UserEmail == email);
+            return student;
+        }
+
         public async Task<List<Staff>> GetAllStaff()
         {
             return await _context.Staffs.Include(s => s.User).ToListAsync();

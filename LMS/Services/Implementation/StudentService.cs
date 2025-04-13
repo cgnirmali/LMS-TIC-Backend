@@ -23,53 +23,98 @@ namespace LMS.Services.Implementation
             _sendMailService = sendMailService; 
         }
 
-        public async Task<Info>AddNewStudent(StudentRequest studentRequest)
+        public async Task<Info> AddNewStudent(StudentRequest studentRequest)
         {
             var existstudent = await _studentRepository.GetStudentByEmail(studentRequest.UserEmail);
-            if (existstudent == null)
-            {
-                var user = new User
+            var user1 = await _userRepository.GetUserByEmailAsync(studentRequest.UTEmail);
+            if ((existstudent == null) && (user1 == null))
                 {
-                    Id = Guid.NewGuid(),
-                    UTEmail = studentRequest.UTEmail,
-                    CreatedDate = DateTime.Now,
-                    role = Assets.Enums.Role.Student,
-                    Password = GenerateRandomString(6),
-
-                };
-                await _userRepository.AddUserAsync(user);
-
-                var student = new Student();
-                student.UserEmail = studentRequest.UserEmail;
-                student.FirstName = studentRequest.FirstName;
-                student.LastName = studentRequest.LastName;
-                student.UTNumber = studentRequest.UTNumber;
-                student.Gender = studentRequest.Gender;
-                student.GroupId = studentRequest.GroupId;
-                student.NIC = studentRequest.NIC;
-                student.Address = studentRequest.Address;
-                student.PhoneNumber = studentRequest.PhoneNumber;           
-                student.CreatedDate = DateTime.Now;
-                student.status = Status.Ongoing;
-                student.UserId = user.Id;
-
-                await _studentRepository.AddNewStudent(student);
-
-                var mailRequest = new MailRequest
+                try
                 {
-                    User = user,
-                    Type = EmailType.Register,
-                    UTPassword = studentRequest.UTPassword,
-                    Student = student,
+                
                     
-                };
-                await _sendMailService.SendEmail(mailRequest);
+                        string randomPassword = GenerateRandomString(6);
+                        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(randomPassword);
 
-                return new Info { text = "Student Added Sucessfully " };
+                        var user = new User
+                        {
+                            Id = Guid.NewGuid(),
+                            UTEmail = studentRequest.UTEmail,
+                            CreatedDate = DateTime.Now,
+                            role = Assets.Enums.Role.Student,
+                            Password = hashedPassword,
+                        };
+
+                        await _userRepository.AddUserAsync(user);
+
+                        var student = new Student
+                        {
+                            UserEmail = studentRequest.UserEmail,
+                            FirstName = studentRequest.FirstName,
+                            LastName = studentRequest.LastName,
+                            UTNumber = studentRequest.UTNumber,
+                            Gender = studentRequest.Gender,
+                            GroupId = studentRequest.GroupId,
+                            NIC = studentRequest.NIC,
+                            Address = studentRequest.Address,
+                            PhoneNumber = studentRequest.PhoneNumber,
+                            CreatedDate = DateTime.Now,
+                            status = Status.Ongoing,
+                            UserId = user.Id // Make sure this UserId exists in DB
+                        };
+
+                        await _studentRepository.AddNewStudent(student);
+
+                        var mailRequest = new MailRequest
+                        {
+                            User = user,
+                            Type = EmailType.Register,
+                            UTEmailPassword = studentRequest.UTPassword,
+                            UTloginPassword = randomPassword,
+                            Student = student,
+                        };
+
+                        await _sendMailService.SendEmail(mailRequest);
+
+                        return new Info { text = "Student Added Successfully" };
+
+
+                    
+
+                    
+
+
+                
+                }
+                catch (DbUpdateException ex)
+                {
+                    // Debug log
+                    Console.WriteLine("Database Update Exception: " + ex.Message);
+                    Console.WriteLine("Inner Exception: " + ex.InnerException?.Message);
+
+                    return new Info
+                    {
+                        text = "Error saving student to database. " +
+                               "Details: " + ex.InnerException?.Message
+                    };
+                }
+                catch (Exception ex)
+                {
+                    // General exception
+                    Console.WriteLine("Exception: " + ex.Message);
+                    return new Info { text = "Unexpected error: " + ex.Message };
+                }
+            }
+            else
+            {
+                throw new Exception("Allready INsert.");
+
             }
 
-            return new Info { text = " Student Already Exist " };
+
+       
         }
+
 
         public static string GenerateRandomString(int length)
         {

@@ -13,5 +13,8 @@ namespace LMS.Repositories.Interfaces
         Task UpdateScheduleDetailAsync(ScheduleDetail scheduledetail);
 
         Task<ScheduleDetail> getSheduleDetailByIdAsync(Guid ScheduleDetailsId);
+
+
+        Task<bool> DeleteScheduleAsync(Guid ScheduleDetailsId);
     }
 }

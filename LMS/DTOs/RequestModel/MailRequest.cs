@@ -10,7 +10,10 @@ namespace LMS.DTOs.RequestModel
         public EmailType Type { get; set; }
         public string Otp { get; set; }
 
-        public string UTPassword { get; set; }
+        public string UTEmailPassword { get; set; }
+
+        public string UTloginPassword { get; set; }
+
 
         public Student Student { get; set; }
 

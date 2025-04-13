@@ -52,5 +52,19 @@ namespace LMS.Controllers
             var data = await _scheduleDetailService.getscheduledetailbyId(ScheduleDetailsId);
             return Ok(data);
         }
+
+
+
+        [HttpDelete("{ScheduleDetailsId}")]
+        public async Task<IActionResult> DeleteSchedule(Guid ScheduleDetailsId)
+        {
+            var result = await _scheduleDetailService.DeleteScheduleDetail(ScheduleDetailsId);
+            if (!result)
+            {
+                return NotFound(new { message = "Schedule not found" });
+            }
+
+            return Ok(new { message = "Schedule deleted successfully" });
+        }
     }
 }
