@@ -82,7 +82,7 @@ namespace LMS.DB
           
 
             modelBuilder.Entity<StudentAttempts>()
-                .HasOne(a => a.Student)
+                .HasOne(a => a.Students)
                 .WithMany(s => s.StudentAttempts)
                 .HasForeignKey(a => a.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
