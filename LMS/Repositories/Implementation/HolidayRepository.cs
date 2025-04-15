@@ -37,5 +37,16 @@ namespace LMS.Repositories.Implementation
             _dbContext.Holiday.Update(holiday);
             await _dbContext.SaveChangesAsync();
         }
+
+
+
+        public async Task<bool> DeleteHolidayAsync(Holiday holiday)
+        {
+          
+
+            _dbContext.Holiday.Remove(holiday);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

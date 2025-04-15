@@ -8,6 +8,7 @@ using Org.BouncyCastle.Pqc.Crypto.Lms;
 
 using LMS.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.WebRequestMethods;
 
 
 namespace LMS.Repositories.Implementation
@@ -36,12 +37,17 @@ namespace LMS.Repositories.Implementation
         }
 
 
-        //public async Task<User> GetUserByEmailForgotPassword(string email)
-        //{
-        //    var data = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-        //    if (data == null) throw new Exception("User Not found");
-        //    return data;
-        //}
+
+
+
+
+        public async Task<OTP> GetLastOtpByEmail(string email)
+        {
+            return _context.OTPs
+                .Where(o => o.UserEmail == email)
+                .OrderByDescending(o => o.EndTime)
+                .FirstOrDefault();
+        }
 
         public async Task<OTP> SaveOTP(OTP oTP)
         {
@@ -58,23 +64,19 @@ namespace LMS.Repositories.Implementation
             return check;
         }
 
-        public async Task RemoveOTP(string otp)
+        public async Task RemoveOTP(Guid id)
         {
-            var sotp = await _context.OTPs.Include(u => u.User).FirstOrDefaultAsync(x => x.Code == otp);
-            if (sotp == null) throw new Exception("OTP Not Found");
-            _context.OTPs.Remove(sotp);
-            await _context.SaveChangesAsync();
-        }
-        public async Task<User> ChangePassword(string email, string password)
-        {
-            var data = await _context.Users.FirstOrDefaultAsync(x => x.UTEmail == email);
-            if (data == null) throw new Exception("User Not Found");
-            data.Password = password;
-            _context.Users.Update(data);
-            await _context.SaveChangesAsync();
-            return data;
-        }
+            var otp = await _context.OTPs.FirstOrDefaultAsync(x => x.Id == id);
+            if (otp == null)
+            {
+                throw new Exception("OTP Not Found");
+            }
+         
 
+            _context.OTPs.Remove(otp); 
+            await _context.SaveChangesAsync();
+        }
+  
        
 
         public async Task<User> GetUserById(Guid id)
@@ -89,12 +91,35 @@ namespace LMS.Repositories.Implementation
             await _context.SaveChangesAsync();
         }
 
-        //public async Task updateUserIsEmailConfirmed(Guid id)
-        //{
-        //    var data = await GetUserById(id);
-        //    data.IsEmailConfirmed = true;
-        //    await _context.SaveChangesAsync();
-        //}
+        public async Task DeleteExpiredOtpsAsync()
+        {
+            var expiredOtps = await _context.OTPs
+                .Where(x => x.EndTime < DateTime.UtcNow)
+                .ToListAsync();
+
+            if (expiredOtps.Any())
+            {
+                _context.OTPs.RemoveRange(expiredOtps);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+   
+        public async Task<OTP> UpdateOtpAsync(OTP otp)
+        {
+             _context.OTPs.Update(otp);
+            await _context.SaveChangesAsync();
+            return otp;
+        }
+
+
+        public async Task<User> ChangePassword(User user)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return user;
+        }
+
 
         public async Task<OTP> GetOtpByUserId(Guid id)
         { 
@@ -108,12 +133,6 @@ namespace LMS.Repositories.Implementation
             return otp;
         }
 
-
-        //public  async Task<User> getElementByEmail(string email)
-        //{
-        //    return await _context.Users.SingleOrDefaultAsync(user => user.Email == email);
-
-        //}
 
 
 

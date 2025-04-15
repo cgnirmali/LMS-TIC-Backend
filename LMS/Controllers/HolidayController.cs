@@ -53,5 +53,19 @@ namespace LMS.Controllers
             var data = await _holidayService.getHolidayById(Id);
             return Ok(data);
         }
+
+
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteHoliday(Guid Id)
+        {
+            var result = await _holidayService.DeleteHoliday(Id);
+            if (!result)
+            {
+                return NotFound(new { message = "Holiday not found" });
+            }
+
+            return Ok(new { message = "Holiday deleted successfully" });
+        }
     }
 }

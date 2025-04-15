@@ -2,7 +2,7 @@
 {
     public enum OtpType
     {
-        Registration = 1,
+        PasswordResetConfirm = 1,
         PasswordReset = 2
     }
 }

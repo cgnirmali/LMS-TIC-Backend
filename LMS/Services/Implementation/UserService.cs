@@ -46,20 +46,12 @@ namespace LMS.Services.Implementation
         public async Task<(TokenModel token, User user)> login(string email, string password)
         {
             var user = await _userRepository.GetUserByEmailAsync(email);
-           
-            // bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Passssword);
-
-            // bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+      
 
             if (user == null) throw new Exception("User not found.");
             if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
                 throw new Exception("Incorrect password.");
 
-            //return CreateToken(user);
-            //if (user.Password != password)
-            //    throw new Exception("Password Not Match");
-
-            //var role = user.role.ToString();
 
             var token = CreateToken(user);
 
@@ -79,29 +71,7 @@ namespace LMS.Services.Implementation
             return (BitConverter.ToUInt32(bytes, 0) % 1000000).ToString("D6");
         }
 
-       
-
-        public async Task<bool> CheckOTP(string otp)
-        {
-            var exits = await _userRepository.CheckOTPExits(otp);
-            if (exits == null) throw new Exception("OTP not found");
-            var today = DateTime.UtcNow;
-            if (exits.EndTime < today) throw new Exception("OTP time out");
-            await _userRepository.RemoveOTP(otp);
-            return true;
-
-        }
-
-       
-
-        public async Task<bool> ChangePassword(string email,string password)
-        {
-            var data = await _userRepository.ChangePassword(email,password);
-            return data != null ? true : false;
-        }
-
-        
-
+      
 
         public TokenModel CreateToken(User user)
         {
@@ -133,22 +103,28 @@ namespace LMS.Services.Implementation
         }
 
 
-        //public async Task<bool> VerifyOtpAsync(OtpVerifyDto otpVerifyDto)
-        //{ 
-        //    var record = await _userRepository.GetUserByEmailAsync(otpVerifyDto.Email);
-        //    var otpRecord = await _userRepository.GetOtpByUserId(record.Id);
-        //    if (otpRecord == null || otpRecord.Code != otpVerifyDto.Otp || otpRecord.OtpType != OtpType.Registration)
-        //    {
-        //        await _userRepository.DeleteUser(record.Id);
-        //        throw new Exception("Invalid OTP");
-        //    }
-        //    else
-        //    {
-        //        await _userRepository.updateUserIsEmailConfirmed(record.Id);
-        //        await _userRepository.RemoveOTP(otpVerifyDto.Otp);
-        //        return true;
-        //    }
-        //}
+        public async Task<bool> VerifyOtpAsync(OtpVerifyDto otpVerifyDto)
+        {
+            var record = await _userRepository.GetLastOtpByEmail(otpVerifyDto.Email);
+
+
+            if (record==null)
+            {
+                throw new Exception("email not found");
+            }
+            
+            if (record.Code == otpVerifyDto.Otp)
+            {
+
+                record.OtpType = OtpType.PasswordResetConfirm;
+                await _userRepository.UpdateOtpAsync(record);
+                return true;
+            }
+            else
+            {
+                throw new Exception("OTP not found");
+            }
+        }
 
 
         public async Task<bool> SendOtpAsync(string email)
@@ -160,174 +136,72 @@ namespace LMS.Services.Implementation
 
             // Check if the user already exists
             var user = await _userRepository.GetUserByEmailAsync(email);
-            if (user == null) throw new Exception("User not found.");
-
-            //if (user == null)
-            //{
-            //    // If user does not exist, create a new one
-            //    user = new User
-            //    {
-            //        UTEmail = email,
-            //        Id = Guid.NewGuid(),
-            //        Password = null,
-            //        IsVerified = false,
-            //        role = Role.Student,
-            //        CreatedDate = today
-            //    };
-
-            //    await _userRepository.AddUserAsync(user);
-            //}
-            //else
-            //{
-            //    // If user exists, check for existing OTP
-            //    var existingOtp = await _userRepository.GetOtpByEmailAsync(email);
-
-            //    if (existingOtp != null && !user.IsEmailConfirmed)
-            //    {
-            //        // Remove old OTP if not verified
-            //        await _userRepository.RemoveOTP(existingOtp.Code);
-
-            //    }
-            //}
-
-            // Generate new OTP and save it
-            var otpEntity = new OTP
+            if (user == null)
             {
-                UserEmail = user.UTEmail,
-                Code = otp,
-                CreatedDate = today,
-                EndTime = expirationTime,
-                UserId = user.Id,
-                OtpType = OtpType.PasswordReset
-            };
+                throw new Exception("User not found.");
 
-            await _userRepository.SaveOTP(otpEntity);
- 
-            // Send email
-            var updatemailRequest = new UpdateMailRequest
+            }
+            else
             {
-                UTEmail = user.UTEmail,  
-                Otp = otp
-            };
 
-            await _sendMailService.SendEmailforUpdate(updatemailRequest);
+                // Generate new OTP and save it
+                var otpEntity = new OTP
+                {
+                    Id = new Guid(),
+                    UserEmail = user.UTEmail,
+                    Code = otp,
+                    CreatedDate = today,
+                    EndTime = expirationTime,
+                    UserId = user.Id,
+                    OtpType = OtpType.PasswordReset
+                };
 
-            return true;
+                await _userRepository.SaveOTP(otpEntity);
+
+                // Send email
+                var updatemailRequest = new UpdateMailRequest
+                {
+                    UTEmail = user.UTEmail,
+                    Otp = otp
+                };
+
+                await _sendMailService.SendEmailforUpdate(updatemailRequest);
+
+                return true;
+
+
+            }
+        }
+
+
+        public async Task<bool> ChangePassword(string email, string password)
+        {
+            var record = await _userRepository.GetLastOtpByEmail(email);
+
+            if ((int)record.OtpType == 1)
+            {
+                var user = await _userRepository.GetUserByEmailAsync(email);
+                if (user == null)
+                    throw new Exception("User not found");
+
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+                user.Password = hashedPassword;
+
+                await _userRepository.ChangePassword(user);
+
+                await _userRepository.RemoveOTP(record.Id);
+                return true; 
+            }
+
+            return false; 
         }
 
 
 
-
-
-        //public async Task<string> Register(RegisterRequest request)
-        //{
-
-        //    var user = await _userRepository.GetUserByEmailAsync(request.Email);
-        //    //var existstudent = await _studentRepository.GetStudentByEmail(user.Email);
-        //    if (request.Password == request.ConfirmPassword && user.IsEmailConfirmed == true)
-        //    {
-        //        var student = new Student
-        //        {
-        //            CreatedDate = DateTime.Now,
-        //            UserId = user.Id,
-        //            NIC = request.NIC,
-        //            PhoneNumber = request.PhoneNumber,
-        //            FirstName = request.FirstName,
-        //            LastName = request.LastName,
-        //            Email = request.Email,
-        //            Gender = request.Gender,
-        //            ImageUrl = request.ImageUrl,
-        //            UTNumber = request.UTNumber,
-        //            AdminVerify = true,
-        //            Address = request.Address
-
-        //        };
-
-        //        await _userRepository.ChangePassword(user.Email, BCrypt.Net.BCrypt.HashPassword(request.Password));
-        //        await _userRepository.AddNewStudent(student);
-        //        await _context.SaveChangesAsync();
-
-        //        return "Student Registered successfully";
-        //    }
-        //    return "Verify Your Email";
-
-        //}
-
-        //public async Task<Info> Register(RegisterRequest request)
-        //{
-        //    var user = await _userRepository.GetUserByEmailAsync(request.Email);
-
-        //    if (user == null)
-        //    {
-        //        var info4 = new Info
-        //        {
-        //            text = "User No"
-        //        };
-
-        //        return info4;
-        //    }
-
-        //    if (!user.IsEmailConfirmed)
-        //    {
-        //        var info3 = new Info
-        //        {
-        //            text = "Please verify your email before registering as a student"
-        //        };
-
-        //        return info3;
-        //    }
-
-        //    var existstudent = await _studentRepository.GetStudentByEmail(user.Email);
-        //    if (existstudent != null)
-        //    {
-        //        var info2 = new Info
-        //        {
-        //            text = "Student already exists"
-        //        };
-
-        //        return info2;
-        //    }
-
-        //    if (request.Password != request.ConfirmPassword)
-        //    {
-        //        var info1 = new Info
-        //        {
-        //            text = "Password and Confirm Password do not match"
-        //        };
-
-        //        return info1;
-        //    }
-
-        //    var student = new Student
-        //    {
-        //        CreatedDate = DateTime.Now,
-        //        UserId = user.Id,
-        //        NIC = request.NIC,
-        //        PhoneNumber = request.PhoneNumber,
-        //        FirstName = request.FirstName,
-        //        LastName = request.LastName,
-        //        Email = request.Email,
-        //        Gender = request.Gender,
-        //        ImageUrl = request.ImageUrl,
-        //        UTNumber = request.UTNumber,
-        //        AdminVerify = true,
-        //        Address = request.Address
-        //    };
-
-        //    // Change Password
-        //    var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
-        //    await _userRepository.ChangePassword(user.Email, hashedPassword);
-
-        //    // Add Student
-        //    await _studentRepository.AddNewStudent(student);
-
-        //    var info = new Info
-        //    {
-        //        text = "Student Registered successfully"
-        //    };
-
-        //    return info;
-        //}
+        public async Task RemoveExpiredOtpsAsync()
+        {
+            await _userRepository.DeleteExpiredOtpsAsync();
+        }
 
 
 
