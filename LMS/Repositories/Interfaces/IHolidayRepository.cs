@@ -10,5 +10,8 @@ namespace LMS.Repositories.Interfaces
 
 
         Task<Holiday> getHolidayById(Guid Id);
+
+        Task<bool> DeleteHolidayAsync(Holiday holiday);
+
     }
 }

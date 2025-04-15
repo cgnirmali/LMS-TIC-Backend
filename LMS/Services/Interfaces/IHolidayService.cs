@@ -9,5 +9,7 @@ namespace LMS.Services.Interfaces
         Task<Holiday> CreateHolidayScheduleAsync(HolidayRequestDto request);
         Task<Holiday> UpdateHolidayAsync(Guid Id, UpdateHolidayRequestDto request);
         Task<Holiday> getHolidayById(Guid Id);
+
+        Task<bool> DeleteHoliday(Guid Id);
     }
 }

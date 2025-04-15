@@ -18,43 +18,27 @@ namespace LMS.Controllers
             _userService = userService;
         }
 
-        //[HttpPost("send")]
-        //public async Task<IActionResult> SendOtp(string email)
-        //{
-        //    if (await _userService.SendOtpAsync(email))
-        //        return Ok(new { message = "OTP sent successfully." });
+        [HttpPost("send")]
+        public async Task<IActionResult> SendOtp(string email)
+        {
+            if (await _userService.SendOtpAsync(email))
+                return Ok(new { message = "OTP sent successfully." });
 
-        //    return BadRequest(new { message = "Failed to send OTP." });
-        //}
-
-    
-        //[HttpPost("CheckOTP")]
-        //public async Task<IActionResult> CheckOTP(string otp)
-        //{
-        //    var data = await _userService.CheckOTP(otp);
-        //    var json = new { message = "OTP verified Succesfully" };
-        //    return Ok(json);
-
-        //}
+            return BadRequest(new { message = "Failed to send OTP." });
+        }
 
 
-        //f<vvdzvev>
+        [HttpPost("CheckOTP")]
+        public async Task<IActionResult> CheckOTP(OtpVerifyDto otpVerifyDto )
+        {
+            var data = await _userService.VerifyOtpAsync(otpVerifyDto);
+          
+            return Ok(data);
 
-        //[HttpPost("VerifyOtp")]
-        //public async Task<IActionResult> EnterOTP(OtpVerifyDto otpVerifyDto)
-        //{
-        //    try
-        //    {
-        //        var data = await _userService.VerifyOtpAsync(otpVerifyDto);
-        //        return Ok(data);
-                    
-        //    }
-        //    catch(Exception ex)
-        //    { 
-        //        return BadRequest(new {ex.Message});
-        //    }
+        }
 
-        //}
+
+        
 
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(string email, string password)
@@ -80,6 +64,13 @@ namespace LMS.Controllers
             {
                 return BadRequest(new { status = "error", message = ex.Message });
             }
+        }
+
+        [HttpDelete("remove-expired")]
+        public async Task<IActionResult> RemoveExpiredOtps()
+        {
+            await _userService.RemoveExpiredOtpsAsync();
+            return Ok(new { message = "Expired OTPs deleted successfully." });
         }
 
 

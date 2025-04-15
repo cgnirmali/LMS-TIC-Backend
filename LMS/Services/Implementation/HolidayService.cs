@@ -65,5 +65,27 @@ namespace LMS.Services.Implementation
 
 
         }
+
+
+        public async Task<bool> DeleteHoliday(Guid Id)
+        {
+            var data =  await _holidayRepository.getHolidayById(Id);
+
+
+            var scheduledata = await _scheduleDetailRepository.getSheduleById(data.ScheduleId);
+
+
+            scheduledata.ClassSchedule = ClassSchedule.NoAdd;
+
+             await _scheduleDetailRepository.UpdateScheduleAsync(scheduledata);
+
+            return await _holidayRepository.DeleteHolidayAsync(data);
+
+
+
+
+
+
+        }
     }
 }
